@@ -1,0 +1,708 @@
+job_id,source,job_title,company,location,description,skills,careers_required,date_posted,url,career_tag,soft_skills_detected,extraction_date
+1c9da29b3f304f52a8f8905ac30844b2,rapidapi2,Practicante de Data & Automatizacion,BetterWase,"Bogota, Capital District, RAP (Especial) Central, Colombia","Oferta de Práctica Profesional – Área de Data & Automatización
+
+En Icon Services buscamos un Practicante de Data & Automatización para unirse a nuestro equipo y apoyar directamente a la Dirección de Data en proyectos estratégicos que impulsan la eficiencia y la innovación en nuestros procesos.
+
+Esta es una oportunidad ideal para estudiantes de últimos semestres que quieran trabajar en un entorno moderno, técnico y altamente orientado a resultados, con proyección a un cargo de Analista Junior al finalizar la práctica.
+
+Objetivo del Cargo
+Brindar soporte en la automatización de procesos, consolidación histórica de información y visualización de datos, aplicando herramientas de última generación para optimizar la gestión de datos corporativos.
+
+Funciones Principales
+Automatizar descargas desde websites de aseguradoras.
+Transformar archivos Excel a .csv para su admisión en Google Cloud Storage (GCS).
+Organizar y cargar archivos de forma estructurada en GCS.
+Validar y documentar técnicamente los archivos.
+Consolidar información histórica (2024–2025).
+Apoyar en la creación de vistas SQL en BigQuery.
+Colaborar en el desarrollo de dashboards interactivos en Power BI.
+Entregar reportes a áreas internas como Marketing, Operaciones y Gerencia.
+
+Perfil del Estudiante
+Estudiante en últimos semestres (con carta de presentación para práctica).
+Programas afines: Ingeniería de Sistemas, Electrónica, Industrial o similares.
+Conocimientos requeridos:
+Python
+SQL
+Excel
+Lógica de bases de datos
+Google Cloud Platform (GCS / BigQuery)
+Power BI
+Deseable: interés en Inteligencia Artificial aplicada al entorno laboral.
+Habilidades blandas:
+Buena comunicación.
+Capacidad de aprendizaje continuo.
+Alta responsabilidad y autogestión.
+Deseable nivel de inglés B1 o superior.
+Indispensable: contar con equipo propio (PC) y conexión estable a internet.
+
+Detalles de la Práctica
+Duración: 6 meses.
+Modalidad: híbrida o remota.
+Horario: lunes a viernes, tiempo completo con horario flexible.
+Remuneración: $1.423.500 COP mensuales (o superior según validación de aptitudes).
+Inicio estimado: inmediato.
+Evaluación universitaria: en 3 etapas:
+Automatización de procesos.
+Consolidación histórica y modelado SQL.
+Visualización de reportes y tableros.
+
+Envía tu hoja de vida al correo: [aacevedo@betterwase.com]
+Show more Show less","['Python', 'SQL', 'Excel', 'Database Logic', 'Google Cloud Platform', 'BigQuery', 'Power BI']",Mecatrónica,2025-08-27T19:50:25,https://co.linkedin.com/jobs/view/practicante-de-data-automatizacion-at-betterwase-4292045399,,[],2025-08-28
+35b7f988262f5d7b92082b0c24d804b3,rapidapi2,Ingeniero en Automatizacion y Control de Procesos,Fluidcontrol S.A. de C.V.,"Querétaro, Querétaro, Mexico","Descripción de la empresa #Firma de Ingenieria Integradora e inovadora de tecnología para la industria de Procesos de Productos Sanitarios, Farma, Home Care, Food, Cosmetics, etc...
+Descripción del puesto Como parte del equipo de Servicios de Ingeniería en Fluidcontrol S.A. de C.V., serás responsable de gestionar y supervisar proyectos en el ámbito de la ingeniería de proceso. Tus tareas diarias incluirán la coordinación de equipos, la gestión de recursos y la solución de problemas técnicos. Este es un puesto de tiempo completo y se realizará de manera presencial en nuestras oficinas ubicadas en Querétaro, Qro y en las instalaciones de nuestros Clientes triple A.
+Requisitos
+Aptitudes analíticas y capacidad para gestionar proyectos de manera efectiva.
+Excelentes habilidades de comunicación en ingles y en español para interactuar con equipos y clientes.
+Conocimiento y experiencia en desarrollo de Ingeniería, Electrica, Mecanica, Automatizacion y control de Procesos. Experiencia en gestión de proyectos, incluyendo planificación y seguimiento.
+Habilidades adicionales como la capacidad para trabajar en equipo, enfoque orientado al detalle y adaptación a entornos dinámicos serán muy valoradas.
+Show more Show less",,Mecatrónica,2025-08-26T21:37:12,https://mx.linkedin.com/jobs/view/ingeniero-en-automatizacion-y-control-de-procesos-at-fluidcontrol-s-a-de-c-v-4291663686,,[],2025-08-28
+883fc7ddc45fffa69e05f3ac4a6db6ff,rapidapi2,COL-ESPECIALISTA DE PRUEBAS Y AUTOMATIZACION-BOGOTA,Telefónica,"Bogota, Capital District, RAP (Especial) Central, Colombia","Enviar candidatura ahora »
+
+Fecha: 25 ago 2025
+
+Ubicación: BOGOTA D.C., DC, CO
+
+Empresa: Telefónica
+
+En Telefónica-Movistar, tenemos como misión hacer nuestro mundo más humano, conectando la vida de las personas, entendemos que son ustedes quienes le dan sentido a la tecnología y no al revés. 
+
+Creemos en el poder transformador de la diversidad, la equidad y la inclusión tanto para el negocio como para la sociedad, por eso nos enfocamos en seguir impulsando una cultura de trabajo abierta que atraiga talento, unimos a las personas y las invitamos a ser ellas mismas, a expresarse, a compartir. 
+
+Cargo: ESPECIALISTA PRUEBAS Y AUTOMATIZACION
+
+Dirección: TECNOLOGIA
+
+Área: COE DE DESARROLLO
+
+Ciudad: BOGOTA
+
+Rango salarial: $4.700.000 - $4.900.000
+
+Misión del puesto:
+
+Responsable del aseguramiento de la calidad de los diferentes desarrollos generados por la dirección de TI de impacto al cliente final y cliente interno; a través de la planeación, diseño, ejecución y automatización de pruebas sobre los diferentes sistemas de la compañía en modalidad scrum.
+
+Funciones principales:
+
+Diseñar, implementar y ejecutar planes de pruebas funcionales, no funcionales, de regresión y exploratorias.
+Participar en la definición de criterios de aceptación y estrategias de validación desde etapas tempranas del desarrollo (shift-left testing).
+Garantizar la trazabilidad entre los requerimientos, casos de prueba y resultados.
+Desarrollar y mantener scripts de pruebas automatizadas utilizando herramientas como Selenium, Postman, JMeter, entre otras.
+Integrar las pruebas automatizadas en los pipelines de CI/CD para asegurar validaciones continuas.
+Identificar oportunidades de automatización en los procesos de validación y proponer soluciones eficientes.
+Monitorear y reportar métricas de calidad del software (cobertura de pruebas, defectos, tiempos de ejecución, etc.).
+Analizar resultados de pruebas y colaborar con los equipos de desarrollo para la resolución de defectos.
+Participar en retrospectivas y sesiones de mejora continua para optimizar la estrategia de pruebas.
+Monitorear y reportar métricas de calidad del software (cobertura de pruebas, defectos, tiempos de ejecución, etc.).
+Analizar resultados de pruebas y colaborar con los equipos de desarrollo para la resolución de defectos.
+Participar en retrospectivas y sesiones de mejora continua para optimizar la estrategia de pruebas.
+
+Habilidades/conocimientos requeridos:
+
+Profesional en Ingeniería de sistemas, Ingeniería de telecomunicaciones o a fin, deseable especialización en temas afines a tecnología.
+De 02 a 03 años de experiencia en planificación, ejecución de pruebas funcionales y no funcionales.
+De 01 a 02 años de experiencia en automatización de pruebas (appium, selenium, funcional tester, jmeter, soapui, entre otras).
+01 año de experiencia con frameworks de agilidad (como Scrum y Kanban).
+Conocimiento en base de datos Oracle y SQL.
+Conocimiento en html, java, android sdk, javascript, apis, gcloud, maven, entre otras.
+Conocimiento en gestión de proyectos.
+Conocimiento en técnicas de diseño de pruebas.
+Conocimiento en pruebas agiles.
+
+Habilidades/conocimientos deseables:
+
+Experiencia en el sector de Telecomunicaciones. 
+Conocimiento de los procesos de negocio de telcos.
+Deseable: Certificado en ISTQB
+Deseable certificado en CAT (certified agile testing)
+Conocimiento en pruebas no funcionales.
+Conocimiento en versionador como Azure Repos
+Conocimiento en DEVOPS.
+
+Competencias:
+
+Trabajo en equipo.
+Comunicación asertiva.
+Excelentes relaciones interpersonales.
+Empuje por obtener resultados.
+Empatía por el negocio.
+
+Propuesta de Valor: 
+
+Flexibilidad horaria
+Beneficio en Puntos para intercambiar por tiempo
+Puntos para intercambiar por experiencias
+Descuentos en productos de la compañía
+Seguro de vida
+
+Enviar candidatura ahora » 
+Show more Show less","['Pruebas Funcionales', 'Pruebas No Funcionales', 'Automatización de Pruebas', 'Selenium', 'Postman', 'JMeter', 'Scrum', 'Kanban', 'Oracle', 'SQL', 'HTML', 'Java', 'JavaScript', 'APIs', 'Gcloud', 'Maven']",Mecatrónica,2025-08-26T08:01:56,https://co.linkedin.com/jobs/view/col-especialista-de-pruebas-y-automatizacion-bogota-at-telef%C3%B3nica-4288876366,,[],2025-08-28
+0515ac60991bedd7a7a6ed2d298e3600,rapidapi2,Consultor en automatizacion plaza SLP,Integracion total en Automatizacion,"San Luis Potosí City, San Luis Potosí, Mexico","🔌 ¿Te apasiona la automatización industrial y las ventas consultivas? ¡Únete a ITA! 🔌
+En ITA - Integración Total en Automatización, somos el partner estratégico de FESTO y SIEMENS. Impulsamos la transformación digital de la industria y estamos buscando un Consultor/a Senior en Automatización para que se una a nuestro equipo de expertos.
+Tu misión:
+Ser el arquitecto de soluciones integrales, liderando proyectos llave en mano.
+Integrar la gama de tecnologías de FESTO (neumática, electroneumática) y SIEMENS (autómatas PLC, TIA Portal, Digital Enterprise) para optimizar procesos industriales.
+Gestionar el ciclo comercial completo con un enfoque consultivo: desde el análisis y diseño técnico hasta la negociación y cierre.
+El perfil que buscamos:
+✅ Titulación en Ingeniería (Industrial, Electrónica, Mecánica o afín).
+✅ +3 años de experiencia en ventas técnicas, ingeniería de aplicaciones o consultoría en automatización.
+✅ Conocimiento sólido en automatización (PLC, neumática, sensórica). Experiencia con SIEMENS y/o FESTO es una ventaja decisiva.
+✅ Mentalidad de consultor, orientación al cliente y ambición por alcanzar objetivos.
+Te ofrecemos:
+💼 Contrato estable y salario base competitivo.
+📈 Plan de comisiones atractivo y sin límites.
+🚀 Certificación oficial continua en las tecnologías líderes de FESTO y SIEMENS.
+🏆 Un rol con impacto real en proyectos de Industria 4.0 y un camino de crecimiento claro.
+Si quieres ser el nexo entre la tecnología más avanzada y la industria, y trabajar con las mejores herramientas del mercado, ¡queremos conocerte!
+¿Es para ti?
+→ Reacciona a esta publicación 👍
+→ Comenta con tu principal fortaleza para este rol 🔍
+→ Envía tu CV a franco.vargas@integracion-total.com con el asunto: ""Consultor Automatización - LinkedIn""
+
+#Empleo #Trabajo #AutomatizaciónIndustrial #OfertaDeTrabajo #Ingeniería #VentasTécnicas #FESTO #SIEMENS #Industria40 #Consultoría #ITA #Innovación #LinkedInJobs
+Show more Show less","['Industrial Automation', 'Consultative Sales', 'Project Management', 'PLC', 'Pneumatics', 'Sensor Technology', 'Client Orientation', 'Technical Analysis', 'Negotiation', 'FESTO', 'SIEMENS', 'Digital Enterprise', 'TIA Portal', 'Engineering', 'Application Engineering', 'Consulting']",Mecatrónica,2025-08-26T00:49:26,https://mx.linkedin.com/jobs/view/consultor-en-automatizacion-plaza-slp-at-integracion-total-en-automatizacion-4290887928,,[],2025-08-28
+77bc10915c8bb25993e7eae8b3716594,rapidapi2,Responsable técnico- AUTOMATIZACION,ENGINEERS SOURCING,"Ortuella, Autonomous Community of the Basque Country, Spain","1.- IDENTIFICACIÓN DEL PUESTO
+Nombre del Puesto Responsable técnico
+Función Responsable técnico
+Familia de puestos Producción, Mantenimiento y Operaciones
+N+1 Responsable de Negocio
+
+2.- MISIÓN
+Se encargará del análisis y ejecución de ofertas en las disciplinas de sistemas de automatización y telecomunicaciones para
+el ámbito de las infraestructuras para la administración pública.
+Se encargará de dar soporte en la ejecución de los proyectos de control y supervisión: basadas en sistemas PLC, SCADA/DCS
+y tecnologías de la información IOT
+
+3.- RESPONSABILIDADES
+1. Análisis y estudios en fase de oferta/licitaciones:
+· Estudiar los proyectos, realizando un cálculo y previsión de los presupuestos.
+· Diseño de la arquitectura de control y confección de la oferta
+· Contactar con subcontratistas y proveedores para conseguir ofertas
+· Desarrollo de memorias técnicas en las disciplinas de sistemas de control y monitorización e integración de
+sistemas de telecomunicaciones tanto para clientes públicos (ferrocarril, agua, puertos y aeropuertos, etc.)
+2. Ejecución de obras:
+· Definición técnica de soluciones para proyectos
+· Gestión económica del proyecto:
+- Control de rendimientos/costes
+· Planificación: gestión de RRHH para sus proyectos
+· Relación con el cliente
+
+4.- OTRAS CARACTERÍSTICAS O CONDICIONES DEL PUESTO
+Movilidad Geográfica requerida
+Viajes Nacionales Para proyectos específicos que lo requieran
+Viajes Internacionales Ocasionales: para proyectos específicos que lo requieran
+
+5.- PERFIL PROFESIONAL
+Formación
+· Grado en Ingeniería industrial especialidad Automatización industrial o Electricidad, Licenciado en Ciencias
+Físicas
+Requisitos
+· Amplios conocimientos en el ámbito de control industrial:
+- PLC: Siemens, Schneider, Allen Bradley, Rockwell, Wago, Ge-fanuc.
+- SCADA: Wonderware, WinCC-OA, CITEC, PC-Vue
+- Comunicaciones industriales
+· Conocimientos de diseño eléctrico
+· Experiencia mínima de 5-8 años en un rol similar
+· Posicionamiento en el ámbito industrial
+Ofimática Nivel
+Office (Excel, Word, & PPT) Intermedio
+Idiomas Nivel
+Inglés
+Francés (a valorar) B2
+Show more Show less",,Mecatrónica,2025-08-25T14:50:56,https://es.linkedin.com/jobs/view/responsable-t%C3%A9cnico-automatizacion-at-engineers-sourcing-4288581194,,[],2025-08-28
+d4b5bca4cb3feea9ef8800cbc7bdb912,rapidapi2,"Ing. Ventas Instrumentación y automatizacion, valvulas",Pronort,"Zapopan, Jalisco, Mexico","Descripción del empleo
+OFERTA:
+Sueldo $16,666.66 + Bonos por Puntualidad y Asistencia $3,333.33
+Un bono anual de 24,000 mil pesos
+Si el primer trimestres llegaba su meta les dan primero 6mil
+tiene que llegará a la meta de venta para que le den el bono
+No está cerrado a dar más dinero si es de otro estado y está dispuesta a mudarse, siempre y cuando cumpla con la experiencia.
+REQUISITOS:
+Ingeniería en Electromecánica, Química, Mecatrónica, Electrónica, Instrumentación y Control, Mecánico, Control de Procesos Industriales
+Mínima de 2 años trabajando en Ventas para la Industria, sector automatización
+Deseable conocimiento en Control de Procesos, Instrumentación y Automatización Industrial
+Manejo de CRM | Generación de Agendas de visitas Semanales | Correcto seguimiento para cierre de oportunidades | Llegar a la habilidad de apoyo en configuración y puesta en marcha según se requiera
+Lunes a viernes de 8 AM a 6 PM
+PUESTO DE:
+Ventas relacionadas con la Representación de Emerson Automation Solution tanto en Instrumentos de Medición Industrial, así como para Válvulas de Control y Reguladores, asesoría técnica, y soporte de los equipos comercializados
+Funciones principales (actividades):
+ Atención de cartera de clientes ya desarrollada mediante visitas que generen nuevas oportunidades de negocio, en las que se deben obtener datos de proceso que tengan como resultado una propuesta que cumpla con el requerimiento del cliente, así como asesorar al mismo respecto de las tendencias de las nuevas tecnologías
+Tipo de puesto: Tiempo completo
+
+Sueldo: $16,000.00 - $27,000.00 al mes
+
+Show more Show less",,Mecatrónica,2025-08-23T10:57:58,https://mx.linkedin.com/jobs/view/ing-ventas-instrumentaci%C3%B3n-y-automatizacion-valvulas-at-pronort-4285932914,,[],2025-08-28
+30a8542f2e1e81f962f53f32a85bda9e,rapidapi2,Tecnico de Automatizacion,Siemens,"Juárez, Durango, Mexico","Manufacturing & machining technical support and assistance
+
+Assist in the installation, configuration and commissioning of the automatied solutions
+
+Peform basic programming modifications troubleshooting and routine maintenance on PLCs
+
+Utilize basic CAD to review interpret and assist with basic modifications mechanical schematics
+
+Assist in correct and complete documentation for automated solutions implemented & developed
+
+Experiencia in machining such as milling lathe and grinding machines
+
+Basic practical experience with CAD software AutoCAD, SolidEdge NX 
+Show more Show less","['Automation', 'Technical Support', 'PLC Programming', 'Troubleshooting', 'Routine Maintenance', 'CAD Software', 'Mechanical Schematics', 'Machining', 'Milling', 'Lathe', 'Grinding Machines', 'Documentation']",Mecatrónica,2025-08-22T13:12:00,https://mx.linkedin.com/jobs/view/tecnico-de-automatizacion-at-siemens-4289477536,,[],2025-08-28
+94525ec1295bd94adea4f0fa2610ddc1,rapidapi2,Asistente comercial para ventas- sistema automatizacion,Automatismos Lau,"Santiago, Santiago Metropolitan Region, Chile","Company Description: automatismos lau
+
+Job Description: Empresa líder en control de accesos y automatismos se encuentra en búsqueda de Asistente comercial
+
+cuya principal función será apoyar la gestión comercial en su conjunto, dentro de las instalaciones de la
+
+empresa. Necesitamos una persona con actitud positiva, motivada y por sobre todo con
+
+perfil comercial, que quiera ser parte de un equipo dinámico y en proceso de crecimiento.
+
+Idealmente con experiencia en venta en automatismos y accesos mínimo un año
+debe tener licencia de conducir
+Conocimientos comerciales
+
+Principales funciones
+
+Captar, asesorar y fidelizar clientes con el objetivo de ampliar cartera comercial.
+Manejar cartera de clientes asignados
+
+Objetivos Del Cargo
+
+Contacto telefónico o por correo electrónico a clientes
+
+Creación de clientes en sistema
+
+Gestión y seguimiento de cotizaciones y órdenes de compra
+
+mantener actualizada información del equipo comercial
+
+Si estas interesado envía tu CV indicando en Asunto Comercial y pretensiones de renta al siguiente mail [email] 
+Show more Show less","['Commercial Skills', 'Customer Service', 'Sales', 'Client Management', 'Communication', 'Positive Attitude', 'Motivation']",Mecatrónica,2025-08-21T20:05:12,https://cl.linkedin.com/jobs/view/asistente-comercial-para-ventas-sistema-automatizacion-at-automatismos-lau-4289344894,,[],2025-08-28
+727d3fe0f635ffe62c3effdcfdb53791,rapidapi2,Asistente para ventas- sistemas automatizacion,Automatismos Lau,"Santiago, Santiago Metropolitan Region, Chile","Company Description: automatismos lau
+
+Job Description: Empresa líder en control de accesos y automatismos se encuentra en búsqueda de Asistente comercial
+
+cuya principal función será apoyar la gestión comercial en su conjunto, dentro de las instalaciones de la
+
+empresa. Necesitamos una persona con actitud positiva, motivada y por sobre todo con
+
+perfil comercial, que quiera ser parte de un equipo dinámico y en proceso de crecimiento.
+
+Idealmente con experiencia en venta en automatismos y accesos mínimo un año
+debe tener licencia de conducir
+Conocimientos comerciales
+
+Principales funciones
+
+Captar, asesorar y fidelizar clientes con el objetivo de ampliar cartera comercial.
+Manejar cartera de clientes asignados
+
+Objetivos Del Cargo
+
+Contacto telefónico o por correo electrónico a clientes
+
+Creación de clientes en sistema
+
+Gestión y seguimiento de cotizaciones y órdenes de compra
+
+mantener actualizada información del equipo comercial
+
+Si estas interesado envía tu CV indicando en Asunto Comercial y pretensiones de renta al siguiente mail [email] 
+Show more Show less","['Sales', 'Customer Service', 'Client Management', 'Commercial Knowledge', 'Communication', 'Motivation', 'Positive Attitude', 'Teamwork']",Mecatrónica,2025-08-21T20:04:54,https://cl.linkedin.com/jobs/view/asistente-para-ventas-sistemas-automatizacion-at-automatismos-lau-4289347425,,[],2025-08-28
+e34682e8d83546df5562273afcda303a,rapidapi2,Becario Ing Electrica/ Mecatronica/ Automatización,WEG Reclutamiento,"Atotonilco de Tula, Hidalgo, Mexico","Requisitos
+
+Únicamente Estudiantes de Ingeniería Eléctrica, Mecánica, Mecatrónica, Industrial.
+
+Disponibilidad de Horario Lunes a Viernes de 8 am a 2 pm.
+
+Contar con Seguro Facultativo Escolar.
+
+Conocimientos
+
+Manejo de office .
+
+Conocimientos mecánicos y eléctricos.
+
+Normas de calidad
+
+Se Te Capacitara Para
+
+Prueba de funcionamiento para tableros eléctricos y de control
+Manejo de instrumentos de medición
+Apoyo en inspección de materia prima
+Auxiliar en actividades y proyectos diversos en el área de desarrollo y clasificación de proveedores, atención a clientes internos
+
+Archivar, revisar y organizar documentos diversos
+
+Tipo de puesto: Medio tiempo, Aprendiz. 
+Show more Show less","['Office Management', 'Mechanical Knowledge', 'Electrical Knowledge', 'Quality Standards', 'Measurement Instruments', 'Inspection Support', 'Document Organization']",Mecatrónica,2025-08-27T13:30:02,https://mx.linkedin.com/jobs/view/becario-ing-electrica-mecatronica-automatizaci%C3%B3n-at-weg-reclutamiento-4289866888,,[],2025-08-28
+e2b1453efa12fdcacd5bc085bc3d3b87,rapidapi2,Tecnico em mecatronica,Netvagas,"Paulista, Paraíba, Brazil","Requisitos
+
+Técnico em eletrotécnica, mecatrônica ou automação;
+Conhecimento em esquemas elétricos, inversores de frequência, CLP- Controle lógico programável e instrumentação elétrica.
+
+Atividades
+
+Participar no desenvolvimento de dispositivo e equipamento de automação;
+Realizar manutenção, medições e testes;
+Integrar processos mecânicos e eletrônicos; 
+Auxiliar na abertura e fechamento de ordem de serviços;
+Realizar Solicitação de peças.
+
+Benefícios
+
+Alimentação na empresa, cesta básica, assistência médica e odontológica, Gympass (Wellhub), vale transporte e convênios com instituições de lazer e ensino.
+Show more Show less",,Mecatrónica,2025-08-26T11:42:21,https://br.linkedin.com/jobs/view/tecnico-em-mecatronica-at-netvagas-4291268147,,[],2025-08-28
+d1f50e93c43df52fc8d6b82297b18635,rapidapi2,INSTRUCTOR DE MECATRONICA AUTOMOTRIZ,Ministerio de Trabajo y Promoción del Empleo,"Lima, Lima, Peru","SENATI, institución líder en formación tecnológica y reconocida como una de las tres mejores empresas para trabajar en el sector educativo, según el ranking Best Workplaces de Computrabajo 2025, se encuentra en la búsqueda de un(a) Instructor Mecatrónica Automotriz.
+
+¿Qué perfil buscamos?
+
+Título Tecnico o universitario en de la carrera de Mecatronica Automotriz o Mecanica Automotriz.
+Experiencia laboral profesional mínima de 03 años de experiencia Acreditada en empresas o talleres del sector de la especialidad.
+Conocimientos sólidos en Mecatrónica Automotriz.
+Manejo de Office a nivel basico
+Disponibilidad para laborar en la Sede Ayacucho(Tiempo parcial).
+
+¿Cuáles serán tus principales funciones?
+
+Planificar, organizar y preparar el plan de sesión de clase del curso virtual o presencial asignado de formación profesional y/o capacitación a trabajadores, así como el material didáctico necesario para el desarrollo de las clases según el curso a desarrollar.
+Ejecutar la programación de actividades (calendarizado), evaluaciones y entrega de trabajos finales en la plataforma LMS y comunicar a los estudiantes/participantes a través de mensajería (correo institucional y mensajería Blackboard) dicha programación, para asegurar el conocimiento pleno de las obligaciones académicas del estudiante/participante, conforme a lo aprobado por la Institución.
+Desarrollar las clases de manera presencial, y/o virtual (síncrono o asíncrono), de acuerdo a lo programado en su plan de sesión de manera integral, según normas metodológicas y técnicopedagógicas establecidas por la Institución.
+Controlar y evaluar las actividades académicas de Formación y Capacitación Profesional acorde con las exigencias establecidas por la Institución.
+Orientar a los estudiantes/participantes en aspectos pedagógicos, alcances y metodología del curso, a través de las herramientas del entorno virtual, aplicando las reglas de la comunicación y motivando a la participación.
+
+¿Qué beneficios ofrecemos?
+
+Ingreso en planilla con todos los beneficios de ley desde el primer día.
+
+Pertenecer a una gran Institución reconocida a nivel nacional.
+
+Capacitación y desarrollo continuo.
+
+Beneficios propios de la Institución.
+
+En SENATI nos comprometemos con la igualdad de oportunidades. Todos/as los/as postulantes serán considerados/as sin importar su origen étnico, sexo, edad, estado civil, orientación sexual, identidad de género, religión, discapacidad, nacionalidad o condición económica. Según ley n°299731. 
+Show more Show less","['Automotive Mechatronics', 'Mechanical Engineering', 'Office Software', 'Teaching', 'Curriculum Development', 'Student Orientation', 'Evaluation', 'Classroom Management']",Mecatrónica,2025-08-26T05:49:21,https://pe.linkedin.com/jobs/view/instructor-de-mecatronica-automotriz-at-ministerio-de-trabajo-y-promoci%C3%B3n-del-empleo-4291042910,,[],2025-08-28
+34c1d088f430f44be024bdd854f9234c,rapidapi2,Manutenzione mecatronica,Socopet S.r.l.,"Tortona, Piedmont, Italy","Suggerimenti: riepiloga le caratteristiche del ruolo, cosa serve per riuscire nella posizione e spiega come si inserisce nel quadro complessivo dell’azienda.
+
+Responsabilità
+cerchiamo il responsabile della manutenzione che si occupi principalmente della gestione della manutenzione e delle problematiche relative alle componenti meccatroniche delle nostre macchine. 
+
+Qualifiche
+Risultano essenziali elevate capacità e conoscenze nel capo dell'elettronica industriale abbinata all'informatica (sempre in campo industriale) e conoscenze di base della meccanica industriale. Per noi è essenziale avere un figura non solo già formata, ma anche con comprovata esperienza nel campo della produzione industriale.
+Show more Show less","['Mecatronics', 'Industrial Electronics', 'Industrial Computing', 'Industrial Mechanics', 'Maintenance Management']",Mecatrónica,2025-08-25T15:18:04,https://it.linkedin.com/jobs/view/manutenzione-mecatronica-at-socopet-s-r-l-4288578728,,[],2025-08-28
+82fc3a582d1f2bb297e20da1fc407c19,rapidapi2,"Prácticas BIOMEDICO, MECATRONICA",Andrec,"Bogota, Capital District, RAP (Especial) Central, Colombia","Desde ANDREC S.A., empresa dedicada a la distribución de equipos médicos oftalmológicos para la detección y diagnóstico, nos permitimos presentar la siguiente propuesta con el fin de establecer un convenio o alianza que nos permita contar con estudiantes de último semestre en práctica de las carreras de Ingeniería Electrónica, Ingeniería Biomédica e Ingeniería Mecatrónica.
+
+Objetivo
+
+Brindar a estudiantes próximos a culminar su formación académica la oportunidad de aplicar sus conocimientos en un entorno profesional real, mientras contribuyen activamente al desarrollo de proyectos y actividades técnicas dentro de nuestra organización.
+
+Justificación
+t
+Estamos convencidos de que el talento joven aporta innovación, dinamismo y nuevas perspectivas a los equipos de trabajo. Al mismo tiempo, queremos aportar al proceso formativo de los futuros profesionales, brindándoles una experiencia valiosa en el sector de tecnología médica, específicamente en el área oftalmológica.
+
+Perfiles requeridos
+
+Buscamos estudiantes con los siguientes perfiles:
+Ingeniería Electrónica:
+Ingeniería Biomédica:
+Ingeniería Mecatrónica
+
+Áreas de apoyo dentro de ANDREC
+
+Soporte técnico en campo y laboratorio
+Asistencia en instalaciones, mantenimientos y calibraciones de equipos oftalmológicos
+Participación en capacitaciones técnicas
+Apoyo en gestión documental y control de calidad de procesos técnicos
+Duración y modalidad
+
+Remuneración
+14.235.000$ - 20.000.000$ al mes
+
+Información adicional
+Desde ANDREC, reiteramos nuestro interés en fortalecer lazos con instituciones educativas y ofrecer espacios de crecimiento profesional a estudiantes destacados. Estamos abiertos a dialogar sobre los términos específicos de vinculación y a establecer un marco de colaboración formal según lo requiera la universidad o entidad educativa.
+Show more Show less","['Technical Support', 'Field Support', 'Laboratory Support', 'Equipment Installation', 'Maintenance', 'Calibration', 'Technical Training', 'Document Management', 'Quality Control']",Mecatrónica,2025-08-24T10:51:49,https://co.linkedin.com/jobs/view/pr%C3%A1cticas-biomedico-mecatronica-at-andrec-4290169516,,[],2025-08-28
+c94e74278fbd1d53412c921029f21527,rapidapi2,Tecnico em mecatronica jr,Netvagas,"Campinas, São Paulo, Brazil","Operar os sistemas prediais seguindo procedimentos operacionais e tomando decisões com base na análise de dados;
+
+Análisar de dados;
+
+Preencher de planilhas de controle;
+
+Monitorar o sistema supervisório;
+
+Elaborar relatórios e abertura de chamados técnicos;
+
+Realizar o checklist e a coleta de dados do funcionamento de equipamentos;
+
+Realizar manobras elétricas e intervenções de manutenção na central;
+
+Realizar o acompanhando manutenções preventivas e corretivas.
+
+Requisitos
+
+Técnico completo em automação ou áreas correlatas;
+
+Disponibilidade para atuar em escala 12X36;
+
+Conhecimentos em sistemas BMS, sistemas de refrigeração e energia;
+
+Conhecimentos em mecânica, hidráulica e pneumática;
+
+Habilidades de leitura e interpretação de desenhos e manuais técnicos;
+
+Competência no uso de ferramentas de medição e teste. 
+Show more Show less",,Mecatrónica,2025-08-22T19:26:45,https://br.linkedin.com/jobs/view/tecnico-em-mecatronica-jr-at-netvagas-4289966018,,[],2025-08-28
+fd396df9beb0431df27428134108cd4e,rapidapi2,Tecnico em mecatronica pl,Netvagas,"Campinas, São Paulo, Brazil","Realizar análise crítica das solicitações de manutenção e convertê-las em ordens de serviço, garantindo todos os recursos necessários para execução das atividades.
+
+Acompanhar os contratos de manutenção em geral e as entregas estabelecidas nos contratos com fornecedores.
+
+Apoiar a elaboração de especificações técnicas para novas contratações.
+
+Apoiar a criação de indicadores SLA s e KPI s (MTBF, MTTR etc.)
+
+Dar suporte na elaboração de relatórios gerenciais para apresentação de resultados
+
+Dar suporte à gestão de documentação de conformidade, procedimentos, normas e instruções de trabalho.
+
+Apoiar ao mapeamento e melhoria dos processos de trabalho atuais.
+
+Dar suporte a gestão estratégica de estoques de peças de manutenção.
+
+Requisitos
+
+Técnico completo em Elétrica, Mecânica, Automação, Produção, Administração;
+
+Conhecimento na área de manutenção, gestão de ordens de serviço e materiais.
+
+Conhecimento em manutenção preventiva, corretiva programada/emergencial e preditiva.
+
+Conhecimento em ferramentas controle de ativos (EAM), manutenção (CMMS) ou Planejamento de Recursos Empresariais (ERP).
+
+Conhecimento em gestão e criação de indicadores. 
+Show more Show less",,Mecatrónica,2025-08-22T19:26:34,https://br.linkedin.com/jobs/view/tecnico-em-mecatronica-pl-at-netvagas-4289960688,,[],2025-08-28
+a006c273a94fc3a4a3da4d190a3baabc,rapidapi2,"Estagiário - Curso Técnico ou Engenharia (MECANICA INDUSTRIAL, MECATRONICA, ELÉTRICA, ELETROMECANICA, ELETRONICA)","GERAR - Geração de Emprego, Renda e Apoio ao Desenvolvimento Regional.","São José dos Pinhais, Paraná, Brazil","📢 VAGA DE ESTÁGIO
+🎓 Curso Técnico ou Engenharia
+⚙️ Mecânica Industrial | Mecatrônica | Elétrica | Eletromecânica | Eletrônica
+
+📍 Local: Afonso Pena – São José dos Pinhais/PR
+📅 Horário: Segunda a sexta, 09h às 16h (1h de intervalo)
+💰 Bolsa: R$ 1.000,00 + auxílio refeição + auxílio transporte
+💡 Benefícios: Plano de Saúde 🏥 | Plano Odontológico 😁 | Gympass 🏋️‍♂️
+
+📝 Atividades:
+
+Acompanhar inspeção do setor da qualidade 🔍
+
+Acompanhar elaboração de documentos e laudos técnicos 📄
+
+✅ Requisitos:
+
+Residir próximo ao local 🏠
+
+Estar cursando Técnico ou Engenharia na área mecânica ou elétrica 🎓
+
+Possuir cadastro na Gerar 📌
+
+📲 Envie seu currículo em PDF com o código da vaga #25861 para:
+WhatsApp: 41 99816-1278
+🌐 Cadastre-se também em: www.gerar.org.br
+Show more Show less","['Quality Inspection', 'Technical Documentation']",Mecatrónica,2025-08-22T16:56:06,https://br.linkedin.com/jobs/view/estagi%C3%A1rio-curso-t%C3%A9cnico-ou-engenharia-mecanica-industrial-mecatronica-el%C3%A9trica-eletromecanica-eletronica-at-gerar-gera%C3%A7%C3%A3o-de-emprego-renda-e-apoio-ao-desenvolvimento-regional-4285026605,,[],2025-08-28
+b67799dafc4dc2f84b06af3280649f9a,rapidapi2,Tecnicos mecatronica taubate,Netvagas,"Taubaté, São Paulo, Brazil","A Trescal é uma multinacional francesa presente em mais de 30 países e referência global em serviços de calibração e metrologia. Atuamos com excelência para garantir a confiabilidade de equipamentos e processos em diversos setores da indústria. Se você busca desenvolvimento, inovação e um ambiente colaborativo, venha fazer parte do nosso time!
+
+Responsabilidades
+
+Realizar calibrações nas áreas dimensional, força, torque, dureza, pressão, eletricidade e
+
+temperatura nas instalações dos nossos clientes, de acordo com o cronograma mensal.
+
+Escolaridade
+
+Formado em Técnico em Mecatrônica
+
+Competências Desejáveis
+
+Disponibilidade para viagem
+
+CNH B
+
+Benefícios
+
+Aqui na Trescal, a gente acredita que cuidar das pessoas vai muito além do trabalho. Por isso, oferecemos um pacote de benefícios pensando com carinho pra te apoiar em cada momento:
+
+VR ou VA - para um almoço gostoso e as pausas com sabor.
+
+VT ou VC - para os nossos encontros presenciais cheios de troca e parceria.
+
+Wellhub - para manter o corpo em movimento e a mente em equilíbrio.
+
+Assistência médica e odontológica - saúde em primeiro lugar, sempre!
+
+Seguro de vida - porque segurança e cuidado também fazem parte.
+
+Horário De Trabalho
+
+De segunda à sexta 7h às 17h, com 1h de Intervalo 
+Show more Show less",,Mecatrónica,2025-08-22T11:44:24,https://br.linkedin.com/jobs/view/tecnicos-mecatronica-taubate-at-netvagas-4289783426,,[],2025-08-28
+ceb634a0695db4dd0661f56001f31c20,rapidapi2,Tecnico di Manutenzione Robotica - Bologna,Exotec,"Imola, Emilia-Romagna, Italy","Exotec è all'avanguardia nell'eccellenza tecnologica per ridefinire il rapporto tra uomo e robot. Le nostre soluzioni contribuiscono al successo di alcuni dei più grandi marchi della vendita al dettaglio e dell'e-commerce, rivoluzionando il modo in cui evadono gli ordini ai consumatori finali, riducendo al contempo i vincoli di manodopera e aumentando la sicurezza sul posto di lavoro.
+
+Grazie all'unificazione di intelligenza artificiale e hardware ad alte prestazioni, le nostre soluzioni robotiche sono oggi diffuse in tutto il mondo e la nostra crescita esponenziale ci ha portato a diventare il primo unicorno industriale in Francia.
+
+Lavorare in Exotec è un'opportunità entusiasmante per dare un senso alle proprie competenze. Imparate e crescete con oltre 900 ExoPeople in tutto il mondo che vi aiuteranno a trasformare le vostre idee in realtà.
+
+La rivoluzione robotica è solo all'inizio in Exotec. Ne farete parte anche voi?
+
+Come Tecnico Di Manutenzione Robotica
+
+Parteciperete all'installazione dei nostri sistemi da parte di Exotec in un nuovo magazzino di un cliente a Bologna.
+Sei responsabile della manutenzione di tutti i sistemi (robot, macchine, trasportatori...) in un team di 5 persone.
+Esegui attività di manutenzione correttiva e preventiva su impianti e macchine
+Monitorare le prestazioni degli impianti
+Assistete l'installazione e la messa in opera di nuovi sistemi o macchine.
+Risponde rapidamente alle situazioni di emergenza, chiamando altri soccorsi se necessario.
+Svolge altre mansioni come da incarico
+
+Requirements
+
+Buone competenze sulle operazioni di manutenzione meccanica ed elettrica
+Ampia conoscenza di software, ingegneria meccanica ed elettrica
+propensione a lavorare su diversi sistemi e macchine e a lavorare sul campo
+Buone capacità di comunicazione
+Buona comprensione dell'inglese (primo scambio con il reclutatore in inglese)
+Show more Show less","['Mechanical Maintenance', 'Electrical Maintenance', 'Software Knowledge', 'Mechanical Engineering', 'Electrical Engineering', 'Field Work', 'Communication Skills', 'English Proficiency']",Mecatrónica,2025-08-27T14:51:54,https://it.linkedin.com/jobs/view/tecnico-di-manutenzione-robotica-bologna-at-exotec-4291900468,,[],2025-08-28
+180f1fe467606f9d6bf78d192e8ee8b4,rapidapi2,SOFTWARE DEVELOPER C#  AMBITO ROBOTICA,Skytechnology SRL,"Turin, Piedmont, Italy","Skytechnology srl è una società di ingegneria punto di riferimento sul mercato dal 2004 per la progettazione e consulenza di sistemi embedded per aziende che spaziano in numerosi settori industriali e all’avanguardia tecnologia (telecomunicazioni, automotive, avionica, aerospazio, trasporti, elettromedicale e automazione industriale)
+Skytechnolgy integra esperienze e competenze affiancando i clienti nella creazione di innovazione tecnologica in ambito firmware/ software embedded, Hardware/fpga, Test e simulazione, Compliance&validation, web&iot
+Skytechnology ha sedi a Milano , Torino e Roma.
+Lavorare in Skytechnolgy
+Essendo un società in forte crescita, Skytechnology è alla ricerca di nuovi talenti da inserire nei propri team di progetto per fornire i migliori servizi ai propri Clienti.
+Ci sono tanti buoni motivi per unirti a noi:
+Condizioni di ingresso nel mondo del lavoro e crescita professionale sia in termini tecnologici che di carriera.
+Esperienze diversificate sui mercati, con utilizzo di tecnologie, metodi e tool all’avanguardia con forte flessibilità tra attività in sede e presso Clienti
+Partnership con università e società tecnologiche
+Crescita professionale sia tecnica che manageriale .
+Possibilità di essere coinvolto/a in progetti di R&S su temi innovativi
+Lavoro in team con il supporto di colleghi esperti;
+
+Chi cerchiamo:
+
+SOFTWARE DEVELOPER C# AMBITO ROBOTICA
+
+Il nostro candidato ideale avrà una Laurea magistrale in Informatica o Ingegneria informatica, una buona conoscenza dei processi di sviluppo software ed esperienza nella progettazione OO .
+Obiettivi:
+• Progettare e sviluppare soluzioni software nell’ambito della robotica, della simulazione grafica e dell’automazione industriale.
+• Lavorare in team con autonomia e responsabilità crescente aderendo agli standard e ai processi aziendale.
+Responsabilità:
+• Comprendere requisiti di prodotto e specifiche architetturali.
+• Progettare, sviluppare, testare e documentare funzioni e componenti software con grado di complessità crescente.
+Skills:
+• Buona conoscenza della lingua inglese, parlata e scritta.
+• Conoscenza delle basi di ingegneria del software, della metodologia OOP, dei design pattern e dell'UML.
+• Buona conoscenza del linguaggio C#
+• Buone basi di matematica, geometria e fisica.
+• Attitudine allo sviluppo di software scientifico.
+Preferred:
+• Laurea non fuoricorso.
+• Basi teoriche di robotica industriale.
+• Basi di grafica 3D, simulazione e realtà virtuale.
+• Basi di intelligenza artificiale.
+Luogo : Santena ( Torino)
+Show more Show less","['C#', 'Software Development', 'Object-Oriented Programming', 'Software Engineering Principles', 'Design Patterns', 'UML', 'Mathematics', 'Geometry', 'Physics', 'Scientific Software Development', 'Robotics', '3D Graphics', 'Simulation', 'Virtual Reality', 'Artificial Intelligence', 'Teamwork', 'English Language']",Mecatrónica,2025-08-27T09:50:28,https://it.linkedin.com/jobs/view/software-developer-c%23-ambito-robotica-at-skytechnology-srl-4291566749,,[],2025-08-28
+42e6e5695a75521144aeb4602abae894,rapidapi2,Software Engineer – Automazione e Robotica,Adecco,"Venaria Reale, Piedmont, Italy","Adecco ricerca per azienda cliente del settore metalmeccanico un/una:
+Software Engineer – Automazione e Robotica – Automazione e Robotica Industriale
+La realtà:
+Il nostro cliente opera nel settore della robotica industriale, specializzata nello sviluppo e nell'integrazione di soluzioni tecnologiche avanzate per l'automazione dei processi produttivi. L'azienda si distingue per l'alta qualità delle proprie soluzioni e l'approccio orientato all'innovazione.
+
+La posizione
+Cerchiamo un profilo ingegneristico con esperienza, da inserire nel team tecnico, con focus su attività di produzione, ottimizzazione di processi automatizzati e integrazione di soluzioni software per l'interfacciamento tra robot e sensori.
+
+Responsabilità principali:
+-Sviluppo e ottimizzazione di processi automatizzati in ambito robotico
+-Integrazione tra robot industriali e sensori esterni (strumenti di visione, laser tracker, ecc.)
+-Sviluppo di soluzioni software per il controllo e la gestione dei sistemi robotizzati
+-Supporto alla produzione per il miglioramento continuo dei processi
+-Programmazione offline e simulazione dei cicli macchina tramite Siemens Process Simulate
+-Attività presso clienti per avviamenti e test
+
+Competenze tecniche richieste
+-Conoscenza approfondita di robotica, cinematica e controlli
+-Esperienza con metrologia, laser tracker, sistemi di riferimento e procedure di azzeramento
+-Capacità di sviluppo comunicazione tra robot e sensori (es. visione artificiale, misura)
+-Conoscenze solide di Algebra Lineare e Analisi Matematica I
+-Programmazione in C++, .NET (C#, VB)
+-Programmazione CNC e G-code
+-Esperienza nell'uso di software CAD/CAM offline e Siemens Process Simulate
+
+Requisiti:
+Laurea in Ingegneria (preferibilmente Meccatronica, Automazione, Elettronica o simili)
+Pregressa esperienza in contesti produttivi legati all'automazione industriale e alla robotica
+
+Disponibilità a trasferte nazionali e internazionali
+
+Zona: Venaria Reale
+Orario: full time
+
+Contratto:
+Inserimento diretto in azienda con inquadramento e retribuzione commisurati all'esperienza
+
+I curricula ricevuti essere comunicati all'azienda nostra cliente o ad altre che ne facciano richiesta per valutare un'eventuale assunzione.
+I candidati ambosessi (L.903/77) sono invitati a registrarsi su www.adecco.it, dando il consenso al trattamento dei propri dati personali, ai sensi della normativa vigente sulla privacy.
+Un facsimile di domanda di candidatura, comprensivo di informativa sulla privacy (art. 9, comma 3, D.Lgs. 276/03), è presente al seguente link Adecco Italia S.p.A. (Aut. Min. Prot. N.1100-SG del 26.11.2004
+Show more Show less",,Mecatrónica,2025-08-27T08:31:53,https://it.linkedin.com/jobs/view/software-engineer-%E2%80%93-automazione-e-robotica-at-adecco-4289827472,,[],2025-08-28
+8b356ae6ba25fcb6eaf3c1bd8853849b,rapidapi2,Ricercatore Scientifico Advisor – Progetto R&S in AI e Robotica Aerea,FlyAdvance,"Naples, Campania, Italy","Stiamo cercando un* ricercatorə con dottorato (o in corso) in ambito AI, Computer Vision o Robotica autonoma, interessatə a collaborare a un progetto innovativo nel settore della sorveglianza autonoma con droni.
+Il progetto ha come obiettivo lo sviluppo di una piattaforma avanzata di autonomia per droni industriali, con particolare attenzione all’elaborazione edge AI, all’individuazione di anomalie e all’interazione con sistemi di sicurezza esistenti.
+La collaborazione inizierà con un incarico retribuito per uno step strategico tecnico necessario alla redazione del piano tecnico per la candidatura ai bandi Smart&Start e ON – Invitalia.
+
+
+🧪 Responsabilità principali nella prima fase:
+Redazione di un assessment tecnico-strategico iniziale (""Technical Feasibility Pre-Assessment"").
+Supporto nella definizione degli obiettivi scientifici e tecnologici.
+Proposta di centri di ricerca e università per avviare collaborazioni.
+Facilitazione o ottenimento di lettere d’intenti (LoI) da parte di enti accademici.
+Possibile collaborazione futura nel ruolo di Scientific Advisor per la fase di sviluppo.
+
+🎓 Requisiti preferenziali:
+Dottorato (PhD) o iscrizione a un programma di dottorato in AI, Computer Vision, Robotics, Autonomy Systems o affini.
+Esperienza in progetti applicati, con visione trasversale tra ricerca, sviluppo e impatto.
+Familiarità con la struttura di un piano tecnico per progetti R&S (anche accademici).
+Capacità di redigere documentazione tecnica in italiano o inglese.
+Attitudine collaborativa, spirito imprenditoriale e curiosità per soluzioni disruptive.
+
+🔧 Tecnologie di riferimento (preferenziale):
+YOLO, ROS/ROS2, TensorFlow, PyTorch, OpenCV, Jetson Nano/Xavier
+Conoscenza generale dei sistemi DJI e delle logiche edge computing su droni
+
+💡 Cosa offriamo:
+Compenso per la prima fase di collaborazione (task tecnico preliminare)
+Possibilità di equity nella startup per i profili più motivati
+Ruolo di visibilità come Scientific Partner o co-founder
+Collaborazione diretta con il fondatore per le fasi di candidatura e sviluppo
+
+📬 Interessatə? Scrivici a:
+👉 info@flyadvance.it
+Show more Show less","['AI', 'Computer Vision', 'Autonomous Robotics', 'Technical Documentation', 'Collaboration', 'Entrepreneurial Spirit', 'Disruptive Solutions', 'Edge AI', 'Anomaly Detection', 'Security Systems Integration']",Mecatrónica,2025-08-26T09:18:22,https://it.linkedin.com/jobs/view/ricercatore-scientifico-advisor-%E2%80%93-progetto-r-s-in-ai-e-robotica-aerea-at-flyadvance-4266442242,,[],2025-08-28
+bf3abd39a4d8809679fab5ede4d43f39,rapidapi2,Senior Mechanical Engineer (robotica),Madison Recruitment,"Zele, Flanders, Belgium","Beschrijving
+
+Onze klant is een vooraanstaande speler in de wereld van robotica, waar gedrevenheid en innovatie samenkomen. Ter uitbreiding van het team en de sterke groei van de onderneming zijn we momenteel op zoek naar een ervaren Senior Mechanical Engineer.
+
+Als Mechanical Engineer kom je terecht in het R&D team dat bestaat uit 14 mensen. Je zal verantwoordelijk zijn voor het ontwikkelen van alle mechanische componenten die gebruikt worden voor de robots. Je gaat mechanische componenten ontwerpen in een autocad programma, hierna wordt er een prototype gemaakt, als deze wordt goedgekeurd gaat het naar de productie. Je rapporteert rechtstreeks aan de R&D Manager.
+
+Interesse? Dan mag je je CV alvast aan Lode bezorgen via l.hertsens@madison.be
+
+Profiel
+
+Je hebt een master diploma in engineering, voorkeur specialisatie in elektromechanica of mechatronica. 
+Je hebt minstens 6 jaar ervaring in een gelijkaardige rol
+Je hebt ervaring met autocad 
+Je bent ondernemend, hebt zin voor initiatief en bent gedreven.
+
+Aanbod
+
+Een sterk loonpakket aangevuld met tal van extralegale voordelen
+Firmawagen 
+32 vakantiedagen
+Maak deel uit van de sterk geautomatiseerde omgevingen van de toekomst!
+
+Show more Show less",,Mecatrónica,2025-08-25T14:24:18,https://be.linkedin.com/jobs/view/senior-mechanical-engineer-robotica-at-madison-recruitment-4290681389,,[],2025-08-28
+7788cb4afb9e6f9a0fdda5005628762e,rapidapi2,Técnico Electrónico y/ o Robotica,HURST GROUP LLC,"Santiago, Santiago Metropolitan Region, Chile","Company Description: HURST CHILE LTDA
+
+Job Description: La empresa Hurst Chile busca colaboradores para ser parte del equipo de técnicos en terreno, que tengan la disponibilidad de viaje, licencia de conducir, enviar curriculum con pretensiones de renta. 
+Show more Show less",,Mecatrónica,2025-08-21T20:06:45,https://cl.linkedin.com/jobs/view/t%C3%A9cnico-electr%C3%B3nico-y-o-robotica-at-hurst-group-llc-4289350687,,[],2025-08-28

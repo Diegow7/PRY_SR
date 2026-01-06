@@ -1,0 +1,289 @@
+job_id,source,job_title,company,location,description,skills,careers_required,date_posted,url,career_tag,soft_skills_detected,extraction_date
+9674525667fedc18d3b4ce148602fc14,rapidapi2,Ingeniero de IA,VASS,"Bogota, Capital District, RAP (Especial) Central, Colombia","¿Eres Ingeniero de IA? Si buscas un gran equipo con un alto nivel técnico, donde se valore la proactividad y las ganas de hacer cosas diferentes
+
+¡VASS ES TU LUGAR! 
+
+Somos una empresa global de transformación digital con un equipo de 4.900 expertos en 26 países de Europa, América y Asia que trabajan juntos para poner a las organizaciones a la vanguardia de la innovación, aunando talento, conocimiento y tecnología. Nuestro enfoque se basa en una tecnología consciente, a través de la cual creamos entornos positivos y oportunidades significativas, siempre a nuestra manera, haciendo sencillo lo complejo.🤘
+
+Somos transformadores, creativos, honestos, vibrantes. Somos VASS.
+
+¿Qué harás en VASS? 
+
+¿Eres Ingeniero de IA? Si buscas un gran equipo con un alto nivel técnico, donde se valore la proactividad y las ganas de hacer cosas diferentes.
+
+¡ESTE ES TU LUGAR!
+
+Somos líderes en soluciones digitales con 25 sedes en los 5 continentes y un equipo de más de 4.500 personas, apoyamos a grandes empresas y administraciones públicas en su proceso de transformación digital end2end, desarrollando y ejecutando los proyectos más innovadores y escalables desde la estrategia hasta la operación.
+
+Todo este crecimiento se basa en el talento y la pasión por la innovación y la mejora continua, siempre a nuestra manera: simplificando lo complejo 🤘
+
+¿Qué requisitos debes cumplir? 
+
+¿Qué harás?
+
+Título profesional en Ingeniería de Sistemas, Computación, Matemáticas, Estadística o afines. Estadística o afines con tarjeta profesional al día.
+
+2+ años de experiencia desarrollando software en producción.
+
+Experiencia práctica en IA generativa, NLP y desarrollo de agentes LLM. (Obligatorio)
+
+Dominio de Python y librerías como LangChain, LangGraph u otras orientadas a agentes. (Obligatorio)
+
+Experiencia con APIs de LLM (Azure OpenAI, OpenAI API, Anthropic, Bedrock). (Obligatorio)
+
+Conocimiento en bases de datos vectoriales (FAISS, Milvus, Pinecone, Weaviate). (Deseable)
+
+Experiencia en despliegue y orquestación en la nube (Azure, AWS). Deseable)
+
+Objetivo:
+
+Diseñar, implementar y desplegar agentes inteligentes basados en modelos de lenguaje (LLM). El Ingeniero de IA será responsable de construir soluciones cognitivas utilizando frameworks de orquestación de agentes, integrándolos con APIs y sistemas internos en entornos cloud cerrados como Azure OpenAI.
+
+Responsabilidades
+
+Diseñar, implementar y desplegar agentes inteligentes en entornos LLM cloud cerrados (Azure OpenAI, Google Vertex AI).
+
+Integrar frameworks como LangChain, LangGraph, CrewAI o Agno para construir flujos conversacionales y procesos de decisión automatizados.
+
+Conectar agentes con APIs, bases de datos vectoriales y sistemas internos.
+
+Implementar pipelines de RAG de extremo a extremo con embeddings, segmentación y recuperación.
+
+Diseñar y exponer tools y servicios mediante MCP para integrar LLMs con control de seguridad y permisos.
+
+Optimizar integraciones para escalabilidad, seguridad y cumplimiento normativo.
+
+Colaborar en el diseño de arquitecturas y estándares para agentes LLM empresariales.
+
+Establecer prácticas de CI/CD, observabilidad y guardrails para servicios de inferencia
+
+Beneficios de trabajar juntos:
+
+📝Contrato Término indefinido.
+
+🧗Plan Carrera
+
+🩺 Medicina Prepagada 100% para ti.
+
+🕕Horario de lunes a viernes
+
+💵💰 Salario A convenir de acuerdo con la experiencia
+
+🔊Beneficios extralegales diferenciales, Concilia Days (Compromisos Familiares 👨 👩 👧 👧 y académicos 📚 , christmas days 🎄 , Mudanza 🚚 , cumpleaños ) 🎁
+
+🛫 Movilidad Internacional
+
+📚 Clases de idiomas y certificaciones técnicas
+
+😀 Gran ambiente de trabajo, ¡nuestros equipos lo hacen posible!
+
+🧠 Estabilidad y proyección de futuro a través del plan de desarrollo profesional.
+
+📈 Serás parte de una empresa dinámica en constante crecimiento.
+
+👨🏻 💻 Participarás en proyectos con tecnologías de vanguardia.
+
+🥇 Formarás parte de un amplio equipo joven, multifuncional y autónomo de profesionales de alto nivel, cuya motivación es la aportación de valor al trabajo diario y a la excelencia profesional.
+
+Si quieres unirte a una empresa dinámica donde los retos tecnológicos se encontrarán en tu día a día, te esperamos en el gran equipo de Vass.
+
+Queremos que seas la mejor versión de ti mismo. TU TALENTO, NUESTRO ADN 🤘
+
+VASS se enorgullece de ser un empleador que ofrece igualdad de oportunidades. No discriminamos por motivos de raza, religión, color, sexo, identidad de género, orientación sexual, edad, origen nacional, estado civil o discapacidad. Nuestro reclutamiento se decide sobre la base de las calificaciones, el mérito y la necesidad comercial.
+
+¿Compartimos el mismo ADN?
+
+📝 Contrato a término indefinido.
+🧗 Plan carrera.
+🩺 Medicina prepagada 100% para ti.
+🕕 Horario de lunes a viernes.
+💰 Salario a convenir de acuerdo con tu experiencia.
+🔊 Beneficios extralegales diferenciales (Concilia days: compromisos familiares 👨‍👩‍👧‍👧, académicos 📚, christmas days 🎄, mudanza 🚚, cumpleaños 🎁).
+🛫 Movilidad internacional.
+📚 Clases de idiomas y certificaciones técnicas.
+😀 Gran ambiente de trabajo, ¡nuestros equipos lo hacen posible!
+🧠 Estabilidad y proyección de futuro a través del plan de desarrollo profesional.
+📈 Serás parte de una empresa dinámica en constante crecimiento.
+👨🏻‍💻 Participarás en proyectos con tecnologías de vanguardia.
+🥇 Formarás parte de un amplio equipo joven, multifuncional y autónomo de profesionales de alto nivel, cuya motivación es la aportación de valor al trabajo diario y a la excelencia profesional.
+
+
+
+¡Si quieres convertirte en un global player en VASS te estamos buscando! 🤘
+
+En VASS luchamos cada día por lograr un entorno favorable que facilite y potencie la igualdad de oportunidades, la no discriminación, la diversidad y la inclusión de todas las personas. 🌟 
+Show more Show less","['AI Engineering', 'Software Development', 'Generative AI', 'Natural Language Processing', 'LLM Development', 'Python', 'LangChain', 'LangGraph', 'API Integration', 'Cloud Deployment', 'Database Knowledge', 'CI/CD Practices', 'Observability', 'Security Compliance', 'Architectural Design', 'Agent Orchestration']",Inteligencia Artificial,2025-08-28T00:40:01,https://co.linkedin.com/jobs/view/ingeniero-de-ia-at-vass-4292072919,,[],2025-08-28
+a8499a29c7fda4b152f6a3d5bec2fc95,rapidapi2,Ingeniero de IA,VASS LATAM,"Bogota, Capital District, RAP (Especial) Central, Colombia","¿Eres Ingeniero de IA? Si buscas un gran equipo con un alto nivel técnico, donde se valore la proactividad y las ganas de hacer cosas diferentes
+
+¡VASS ES TU LUGAR! 
+
+Somos una empresa global de transformación digital con un equipo de 4.900 expertos en 26 países de Europa, América y Asia que trabajan juntos para poner a las organizaciones a la vanguardia de la innovación, aunando talento, conocimiento y tecnología. Nuestro enfoque se basa en una tecnología consciente, a través de la cual creamos entornos positivos y oportunidades significativas, siempre a nuestra manera, haciendo sencillo lo complejo.🤘
+
+Somos transformadores, creativos, honestos, vibrantes. Somos VASS.
+
+¿Qué harás en VASS? 
+
+¿Eres Ingeniero de IA? Si buscas un gran equipo con un alto nivel técnico, donde se valore la proactividad y las ganas de hacer cosas diferentes.
+
+¡ESTE ES TU LUGAR!
+
+Somos líderes en soluciones digitales con 25 sedes en los 5 continentes y un equipo de más de 4.500 personas, apoyamos a grandes empresas y administraciones públicas en su proceso de transformación digital end2end, desarrollando y ejecutando los proyectos más innovadores y escalables desde la estrategia hasta la operación.
+
+Todo este crecimiento se basa en el talento y la pasión por la innovación y la mejora continua, siempre a nuestra manera: simplificando lo complejo 🤘
+
+¿Qué requisitos debes cumplir? 
+
+¿Qué harás?
+
+Título profesional en Ingeniería de Sistemas, Computación, Matemáticas, Estadística o afines. Estadística o afines con tarjeta profesional al día.
+
+2+ años de experiencia desarrollando software en producción.
+
+Experiencia práctica en IA generativa, NLP y desarrollo de agentes LLM. (Obligatorio)
+
+Dominio de Python y librerías como LangChain, LangGraph u otras orientadas a agentes. (Obligatorio)
+
+Experiencia con APIs de LLM (Azure OpenAI, OpenAI API, Anthropic, Bedrock). (Obligatorio)
+
+Conocimiento en bases de datos vectoriales (FAISS, Milvus, Pinecone, Weaviate). (Deseable)
+
+Experiencia en despliegue y orquestación en la nube (Azure, AWS). Deseable)
+
+Objetivo
+
+Diseñar, implementar y desplegar agentes inteligentes basados en modelos de lenguaje (LLM). El Ingeniero de IA será responsable de construir soluciones cognitivas utilizando frameworks de orquestación de agentes, integrándolos con APIs y sistemas internos en entornos cloud cerrados como Azure OpenAI.
+
+Responsabilidades
+
+Diseñar, implementar y desplegar agentes inteligentes en entornos LLM cloud cerrados (Azure OpenAI, Google Vertex AI).
+
+Integrar frameworks como LangChain, LangGraph, CrewAI o Agno para construir flujos conversacionales y procesos de decisión automatizados.
+
+Conectar agentes con APIs, bases de datos vectoriales y sistemas internos.
+
+Implementar pipelines de RAG de extremo a extremo con embeddings, segmentación y recuperación.
+
+Diseñar y exponer tools y servicios mediante MCP para integrar LLMs con control de seguridad y permisos.
+
+Optimizar integraciones para escalabilidad, seguridad y cumplimiento normativo.
+
+Colaborar en el diseño de arquitecturas y estándares para agentes LLM empresariales.
+
+Establecer prácticas de CI/CD, observabilidad y guardrails para servicios de inferencia
+
+Beneficios De Trabajar Juntos
+
+📝Contrato Término indefinido.
+
+🧗Plan Carrera
+
+🩺 Medicina Prepagada 100% para ti.
+
+🕕Horario de lunes a viernes
+
+💵💰 Salario A convenir de acuerdo con la experiencia
+
+🔊Beneficios extralegales diferenciales, Concilia Days (Compromisos Familiares 👨 👩 👧 👧 y académicos 📚 , christmas days 🎄 , Mudanza 🚚 , cumpleaños ) 🎁
+
+🛫 Movilidad Internacional
+
+📚 Clases de idiomas y certificaciones técnicas
+
+😀 Gran ambiente de trabajo, ¡nuestros equipos lo hacen posible!
+
+🧠 Estabilidad y proyección de futuro a través del plan de desarrollo profesional.
+
+📈 Serás parte de una empresa dinámica en constante crecimiento.
+
+👨🏻 💻 Participarás en proyectos con tecnologías de vanguardia.
+
+🥇 Formarás parte de un amplio equipo joven, multifuncional y autónomo de profesionales de alto nivel, cuya motivación es la aportación de valor al trabajo diario y a la excelencia profesional.
+
+Si quieres unirte a una empresa dinámica donde los retos tecnológicos se encontrarán en tu día a día, te esperamos en el gran equipo de Vass.
+
+Queremos que seas la mejor versión de ti mismo. TU TALENTO, NUESTRO ADN 🤘
+
+VASS se enorgullece de ser un empleador que ofrece igualdad de oportunidades. No discriminamos por motivos de raza, religión, color, sexo, identidad de género, orientación sexual, edad, origen nacional, estado civil o discapacidad. Nuestro reclutamiento se decide sobre la base de las calificaciones, el mérito y la necesidad comercial.
+
+¿Compartimos el mismo ADN?
+
+📝 Contrato a término indefinido.
+🧗 Plan carrera.
+🩺 Medicina prepagada 100% para ti.
+🕕 Horario de lunes a viernes.
+💰 Salario a convenir de acuerdo con tu experiencia.
+🔊 Beneficios extralegales diferenciales (Concilia days: compromisos familiares 👨‍👩‍👧‍👧, académicos 📚, christmas days 🎄, mudanza 🚚, cumpleaños 🎁).
+🛫 Movilidad internacional.
+📚 Clases de idiomas y certificaciones técnicas.
+😀 Gran ambiente de trabajo, ¡nuestros equipos lo hacen posible!
+🧠 Estabilidad y proyección de futuro a través del plan de desarrollo profesional.
+📈 Serás parte de una empresa dinámica en constante crecimiento.
+👨🏻‍💻 Participarás en proyectos con tecnologías de vanguardia.
+🥇 Formarás parte de un amplio equipo joven, multifuncional y autónomo de profesionales de alto nivel, cuya motivación es la aportación de valor al trabajo diario y a la excelencia profesional.
+
+¡Si quieres convertirte en un global player en VASS te estamos buscando! 🤘
+
+En VASS luchamos cada día por lograr un entorno favorable que facilite y potencie la igualdad de oportunidades, la no discriminación, la diversidad y la inclusión de todas las personas. 🌟 
+Show more Show less","['AI Engineering', 'Software Development', 'Generative AI', 'Natural Language Processing', 'LLM Development', 'Python', 'LangChain', 'LangGraph', 'APIs', 'Cloud Deployment', 'Database Knowledge', 'CI/CD Practices', 'Observability', 'Security Compliance', 'Architectural Design', 'Automation']",Inteligencia Artificial,2025-08-27T19:33:15,https://co.linkedin.com/jobs/view/ingeniero-de-ia-at-vass-latam-4292026131,,[],2025-08-28
+30cd4b6602f56872cca8519cdb4d464e,rapidapi2,Ingeniero de IA,Bosch México,"Aguascalientes City, Aguascalientes, Mexico","Bosch fue fundada en Stuttgart en 1886 por Robert Bosch (1861-1942), y por más de 130 años se ha distinguido por una cultura corporativa única, basada en valores sólidos que nos impulsan a mejorar cada día. Nuestros productos, presentes en una amplia variedad de terrenos, contribuyen a mejorar la calidad de vida de millones de personas.
+
+Descripción del empleo
+
+Objetivo Del Puesto
+
+Análisis, desarrollo e implementación de soluciones digitales y de automatización rentables, con
+
+enfoque a la mejora de métricos y condiciones operativos y administrativos.
+
+Responsabilidades Específicas Principales
+
+Desarrollo de soluciones digitales y de automatización de procesos.
+Identificación de mejora continua a través de aspectos digitales para los diferentes procesos de la organización.
+Investigación y desarrollo en tecnologías, sistemas y lenguajes multiplataformas emergentes para su aplicabilidad en nuestros procesos.
+Cumplimiento de métricos del departamento.
+
+Tareas Específicas
+
+Desarrollo de aplicaciones multiplataforma para adquisición, modelado y reporteo de datos.
+Utilizar técnicas estadísticas y herramientas de análisis para identificar patrones, tendencias y relaciones en los datos.
+Generación de dashboards, gráficos y visualizaciones en tiempo real para análisis de tendencias y toma de decisiones.
+Adquisición y modelado de datos desde el origen a través de diferentes protocolos de comunicación.
+Interconexión de dispositivos IoT.
+Desarrollo de aplicativos y modelos basados en IA.
+Trabajar en estrecha colaboración con otros departamentos y equipos para comprender sus necesidades de datos y proporcionar soluciones basadas en datos.
+Mantenerse actualizado sobre las últimas tendencias y avances en el campo de análisis de datos y proponer la adopción de nuevas herramientas y técnicas.
+Respetar y aplicar las normas establecidas de seguridad e higiene.
+Respetar y aplicar el reglamento interior y normas legales.
+
+Requisitos
+
+Escolaridad
+
+Perfil del puesto:
+
+Nivel Mínimo de Estudios: Licenciatura terminada.
+Especialidad: Mecatrónica, Sistemas Computacionales, Tecnologías Informáticas, Transformación Digital.
+
+Idioma: Inglés avanzado
+
+Años de experiencia: de 3 a 7 años.
+
+Habilidades, Experiencia y Conocimiento
+
+Dominio de Python (Pandas, NumPy, Scikit-learn, TensorFlow, PyTorch).Experiencia con bases de datos SQL y NoSQL (MongoDB).Conocimiento en limpieza de datos, preprocesamiento y feature engineering.Experiencia en ETL pipelines e integración de datos desde múltiples fuentes (SAP, MES, sistemas IoT).
+Bases de datos: Experiencia en diseño, implementación y optimización de bases de datos relacionales (como SQL Server, PostgreSQL) y no relacionales (como MongoDB).
+Desarrollo de modelos predictivos (pronóstico de demanda, mantenimiento predictivo, riesgos en la cadena de suministro).Experiencia en Deep Learning (DL) para visión computacional y NLP.Familiaridad con IA Generativa (LLMs, MCP) y su aplicación en manufactura y procesos de soporte.Conocimientos de algoritmos de optimización para producción y logística
+Experiencia con datos de sensores (IoT) y análisis de series de tiempo.Familiaridad con herramientas como Node-RED y GrafanaCapacidad para construir digital twins y modelos de monitoreo en tiempo real.
+Sólidas habilidades en Power BI (DAX, Power Query, dashboards avanzados).Capacidad para crear dashboards con IA que incluyan análisis predictivo y prescriptivo.
+Procesamiento de datos: Habilidad para desarrollar pipelines de datos eficientes y escalables, con soluciones basadas en la nube como Azure, AWS, etc.
+Extracción, transformación y carga (ETL): Experiencia en la implementación de procesos ETL para la integración y transformación de datos de diversas fuentes en almacenes de datos o data lakes.
+Modelado de datos: Capacidad para diseñar modelos de datos eficientes que sean escalables y cumplan con los requisitos de análisis y reporte.
+Seguridad y gestión de datos: Conocimientos en seguridad de datos.
+Diseño y Desarrollo de Microservicios: Diseño de microservicios, incluyendo la división adecuada de funcionalidades, la cohesión y el acoplamiento mínimo entre servicios, así como su consumo y utilización a través de APIs.
+Automatización y monitoreo: Habilidad para automatizar tareas y procesos relacionados con la gestión y el procesamiento de datos, y establecer sistemas de monitoreo para garantizar la integridad y la disponibilidad de los datos. 
+Experiencia en integración con ERP (SAP R/3 o S/4HANA).Conocimiento de KPIs de manufactura (OEE, IDC, CT) y cómo optimizarlos con IA.Familiaridad con data governance, ciberseguridad y compliance en entornos industriales con enfoque a IA
+
+Información adicional
+
+Bosch amplía constantemente su presencia internacional, ya que para nosotros la diversidad cultural representa una de nuestras mayores fuerzas. Impulsamos continuamente el crecimiento de nuestros más de 17 mil asociados, quienes desarrollan todo su potencial en una de las empresas con más alta calidad en materia de tecnología. Valoramos el balance entre vida personal y laboral como una de las principales herramientas para mejorar la creatividad y productividad de nuestros asociados. 
+Show more Show less","['Python', 'SQL', 'NoSQL', 'Data Cleaning', 'ETL', 'Predictive Modeling', 'Deep Learning', 'NLP', 'IoT', 'Data Visualization', 'Power BI', 'Cloud Solutions', 'Microservices', 'Data Security', 'Automation', 'Data Governance']",Inteligencia Artificial,2025-08-21T21:57:58,https://mx.linkedin.com/jobs/view/ingeniero-de-ia-at-bosch-m%C3%A9xico-4289075157,,[],2025-08-28
