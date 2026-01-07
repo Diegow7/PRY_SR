@@ -159,6 +159,50 @@ class AIPersonalizer:
 		line = self._clean_text_out(line)
 		return line
 
+	def _semantic_fallback(
+		self,
+		cargo: str,
+		descripcion: str,
+		eurace_skills: str,
+		skills: str,
+		carrera: str,
+		asignaturas: str
+	) -> str:
+		parts = []
+
+		if descripcion:
+			parts.append(
+				f"El rol de {cargo} se centra en actividades técnicas descritas en la oferta, "
+				f"con responsabilidades alineadas al campo de {carrera.lower()}."
+			)
+		else:
+			parts.append(
+				f"El puesto de {cargo} se orienta a funciones propias del ámbito de {carrera.lower()}."
+			)
+
+		asign_txt = self._clean_subjects(asignaturas)
+		if asign_txt:
+			parts.append(
+				f"La formación en asignaturas como {asign_txt} proporciona una base académica "
+				f"útil para responder a las exigencias del puesto."
+			)
+
+		tech = self._pick_skills(skills)
+		if tech:
+			parts.append(
+				f"A nivel técnico, se valoran conocimientos aplicados en {self._spanish_join(tech)}, "
+				f"relevantes para el desempeño cotidiano del rol."
+			)
+
+		if eurace_skills.strip():
+			parts.append(
+				"El perfil también se alinea con competencias profesionales contempladas "
+				"en el marco de referencia EURACE."
+			)
+
+		return self._clean_text_out(" ".join(parts[:3]))
+
+
 	def personalize_description(
 		self,
 		cargo: str,
@@ -181,9 +225,9 @@ class AIPersonalizer:
 			except Exception:
 				pass
 		# Fallback determinístico
-		return self._clean_text_out(self._simple_explanation(
-			cargo, descripcion, eurace_skills, skills, carrera, asignaturas, soft_skills
-		))
+		return self._semantic_fallback(
+			cargo, descripcion, eurace_skills, skills, carrera, asignaturas
+		)
 
 	def personalize_batch(
 		self,
@@ -196,7 +240,13 @@ class AIPersonalizer:
 			try:
 				prompt = self._build_batch_prompt(items, carrera, asignaturas, soft_skills)
 				# Mayor variación de estilo y longitud controlada
-				text = self._chat(prompt, temperature=0.55, presence_penalty=0.25, frequency_penalty=0.25, max_tokens=1100)
+				text = self._chat(
+					prompt,
+					temperature=0.7,
+					presence_penalty=0.6,
+					frequency_penalty=0.4,
+					max_tokens=1100
+				)
 				parsed = self._parse_json_array(text, expected=len(items))
 				if not parsed:
 					parsed = self._parse_batch_lines(text, expected=len(items))
@@ -291,6 +341,12 @@ class AIPersonalizer:
 			try:
 				prompt = (
 					"Redacta un solo párrafo (2–3 frases), claro y personalizado, para mostrar tras el título 'Oportunidades si mejoras tus habilidades blandas'. "
+					"NO repitas recomendaciones genéricas ni estructuras comunes. "
+					"Conecta las habilidades blandas a reforzar con el tipo de cargos recomendados en esta consulta. "
+					"Explica beneficios concretos (mayor responsabilidad, mejores condiciones, crecimiento profesional). "
+					"Reconoce brevemente una fortaleza solo si aporta contexto real. "
+					"Sugiere 2 acciones prácticas distintas en cada respuesta, vinculadas a la carrera y al entorno laboral implícito. "
+					"Tono profesional, académico y no repetitivo.\n\n"
 					"NO repitas el título ni comiences con 'Para impulsar'. Evita markdown. "
 					"Incluye: (1) por qué reforzar 1–2 habilidades más bajas del usuario (no resaltes las más altas) genera beneficios concretos (más ofertas, mejor remuneración, crecimiento); "
 					"(2) reconoce brevemente 1 fortaleza si existe; (3) sugiere 2 prácticas específicas y accionables relacionadas con la carrera/asignaturas. Tono profesional, variado y no genérico.\n\n"
@@ -393,6 +449,12 @@ class AIPersonalizer:
 			"Genera EXACTAMENTE un arreglo JSON de cadenas (sin texto extra).",
 			"Cada elemento es el mensaje para una oferta: 3–4 frases, tono profesional y ético.",
 			"Varía el inicio y la estructura entre elementos; evita frases hechas o plantillas repetidas.",
+			"REGLAS ESTRICTAS DE DIVERSIDAD:",
+			"- Cada texto debe ser semánticamente distinto; no solo cambiar palabras.",
+			"- Está PROHIBIDO reutilizar estructuras como:",
+			"  'Asignaturas relevantes', 'Se sustentan en', 'destaca como opción sólida'.",
+			"- No repitas argumentos entre ofertas, aunque pertenezcan a la misma carrera.",
+			"- Cada texto debe enfatizar UN enfoque distinto: operativo, académico, técnico, estratégico, o de proyección profesional.",
 			"Incluye: (1) resumen del rol; (2) vínculo con la carrera del usuario usando asignaturas válidas y/o EURACE; (3) 1–2 skills técnicas SOLO si aportan contexto real.",
 			"Prohibido usar 'encaja/encaje'. No incluyas 'nan' ni cadenas sin sentido.",
 			f"Carrera del usuario: {carrera}",
@@ -401,11 +463,24 @@ class AIPersonalizer:
 			"Para forzar diversidad, asigna estos estilos en orden (y repite si faltan): analítico, concreto, académico, orientado a impacto, motivador, estratégico.",
 			"Ofertas:",
 		]
+		focus = [
+			"operativo",
+			"académico",
+			"técnico",
+			"estratégico",
+			"proyección profesional"
+		]
+
 		for i, it in enumerate(items, 1):
 			style = styles[(i - 1) % len(styles)]
+			enfoque = focus[(i - 1) % len(focus)]
 			lines.append(
-				f"{i}) Cargo: {it.get('cargo','')}; Desc: {it.get('descripcion','')}; "
-				f"EURACE: {it.get('eurace_skills','')}; Skills: {it.get('skills','')}; Estilo: {style}"
+				f"{i}) Cargo: {it.get('cargo','')}; "
+				f"Desc: {it.get('descripcion','')}; "
+				f"EURACE: {it.get('eurace_skills','')}; "
+				f"Skills: {it.get('skills','')}; "
+				f"Enfoque obligatorio: {enfoque}; "
+				f"Estilo: {style}"
 			)
 		lines.append(f"Devuelve solo el arreglo JSON con {len(items)} elementos.")
 		return "\n".join(lines)
