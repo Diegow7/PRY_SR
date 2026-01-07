@@ -62,20 +62,36 @@ class AIPersonalizer:
 		asignaturas: str,
 		soft_skills: List[int]
 	) -> str:
+		# Generar un texto breve con variación determinística por oferta
 		asignaturas_txt = asignaturas.strip()
-		linea1 = f"La oferta '{cargo}' se alinea con {carrera}."
-		if asignaturas_txt:
-			linea1 += f" Tus asignaturas relevantes ({asignaturas_txt}) refuerzan el encaje."
-		# Resumen muy corto de eurace/skills
-		pistas = []
-		if eurace_skills:
-			pistas.append('EURACE')
 		picked = self._pick_skills(skills)
-		if picked:
-			pistas.append("skills técnicas como " + self._spanish_join(picked))
-		pista_txt = ' y '.join(pistas) if pistas else 'competencias del perfil'
-		linea2 = f"Por {pista_txt}, tu perfil puede aportar valor en este rol."
-		return f"{linea1} {linea2}"
+		# Construir pistas sin 'nan' ni ruido
+		use_eur = bool((eurace_skills or '').strip())
+		pista_txt = ''
+		if use_eur and picked:
+			pista_txt = f"EURACE y {self._spanish_join(picked)}"
+		elif picked:
+			pista_txt = self._spanish_join(picked)
+		elif use_eur:
+			pista_txt = "las competencias EURACE del cargo"
+		else:
+			pista_txt = "tus competencias y trayectoria"
+
+		seed_base = f"{cargo}|{carrera}|{asignaturas_txt}|{','.join(picked)}"
+		seed = int(hashlib.md5(seed_base.encode('utf-8')).hexdigest(), 16)
+		templates = [
+			"'{cargo}' encaja con {carrera}. {asig} {razon}.",
+			"{carrera}: '{cargo}' muestra alineación con tu perfil. {asig} {razon}.",
+			"Tu formación en {carrera} conecta naturalmente con '{cargo}'. {asig} {razon}.",
+			"'{cargo}' es una oportunidad afín a {carrera}. {asig} {razon}."
+		]
+		idx = seed % len(templates)
+		asig = f"Asignaturas: {asignaturas_txt}." if asignaturas_txt else ""
+		razon = f"Refuerzan el encaje {pista_txt}." if pista_txt else ""
+		line = templates[idx].format(cargo=cargo, carrera=carrera, asig=asig, razon=razon).strip()
+		# Evitar puntos dobles o espacios redundantes
+		line = re.sub(r"\s+", " ", line).strip()
+		return line
 
 	def personalize_description(
 		self,
@@ -113,8 +129,8 @@ class AIPersonalizer:
 		if self._enabled and self._client is not None and items:
 			try:
 				prompt = self._build_batch_prompt(items, carrera, asignaturas, soft_skills)
-				# Increase token limit to prevent truncation across multiple 3–4 sentence lines
-				text = self._chat(prompt, max_tokens=900)
+				# Mayor variación de estilo y longitud controlada
+				text = self._chat(prompt, temperature=0.5, presence_penalty=0.2, frequency_penalty=0.2, max_tokens=900)
 				parsed = self._parse_batch_lines(text, expected=len(items))
 				if parsed and len(parsed) == len(items):
 					# Ensure each line is complete; replace suspiciously short/truncated lines with deterministic fallback
@@ -298,8 +314,9 @@ class AIPersonalizer:
 	) -> str:
 		lines = [
 			"Vas a producir una línea por oferta, en el formato 'N. mensaje'.",
-			"Cada mensaje: 3–4 frases; 1) de qué va, 2) por qué encaja con el usuario usando asignaturas y EURACE, 3) menciona 1–2 skills técnicas de 'Skills' si existen.",
-			"No incluyas listados ni saltos extras; sé natural y concreto.",
+			"Cada mensaje debe tener 3–4 frases y VARIAR el estilo entre ofertas (sin repetir la misma estructura).",
+			"Incluye: 1) de qué va el rol, 2) por qué encaja con el usuario usando asignaturas y/o EURACE, 3) menciona 1–2 skills técnicas de 'Skills' si aportan contexto.",
+			"Evita frases genéricas como 'refuerzan el encaje'; usa sinónimos y concreciones distintas por línea.",
 			f"Carrera del usuario: {carrera}",
 			f"Asignaturas relevantes del usuario: {asignaturas}",
 			f"Soft skills (1–5): {soft_skills}",
@@ -384,10 +401,17 @@ class AIPersonalizer:
 			p2 = re.sub(r"\s+", " ", p2)
 			if len(p2) > 40:
 				continue
+			# Requiere al menos una letra; evita tokens dominados por dígitos/puntuación
+			if not re.search(r"[A-Za-zÁÉÍÓÚáéíóúñ]", p2):
+				continue
+			punct_ratio = (len(re.findall(r"[^\w\s]", p2)) / max(len(p2), 1))
+			digit_ratio = (len(re.findall(r"\d", p2)) / max(len(p2), 1))
+			if punct_ratio > 0.4 or digit_ratio > 0.4:
+				continue
 			clean.append(p2)
 		if not clean:
 			# fallback: separar por espacios y tomar tokens significativos
-			toks = [t for t in re.split(r"\s+", st) if len(t) > 2 and t.lower() != 'nan']
+			toks = [t for t in re.split(r"\s+", st) if len(t) > 2 and t.lower() != 'nan' and re.search(r"[A-Za-zÁÉÍÓÚáéíóúñ]", t)]
 			clean = toks[:3]
 		return clean[:2]
 
