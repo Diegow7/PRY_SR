@@ -52,6 +52,38 @@ class AIPersonalizer:
 				# Si no se puede inicializar, desactivar silenciosamente
 				self._enabled = False
 
+	def _clean_subjects(self, asignaturas: str) -> str:
+		"""Sanear asignaturas para evitar basura (ej. 'asdadsad'). Devuelve frase breve o ''"""
+		s = (asignaturas or '').strip()
+		if not s:
+			return ''
+		# Normalizar separadores y dividir
+		parts = re.split(r"[;,]\s*|\s{2,}", s)
+		clean: List[str] = []
+		for p in parts:
+			w = p.strip()
+			if not w:
+				continue
+			# Heurísticas de sentido: contiene letras y vocales, baja puntuación, no 'nan'
+			if w.lower() == 'nan':
+				continue
+			if not re.search(r"[A-Za-zÁÉÍÓÚáéíóúñ]", w):
+				continue
+			if not re.search(r"[AEIOUaeiouáéíóú]", w):
+				continue
+			punct_ratio = (len(re.findall(r"[^\w\s]", w)) / max(len(w), 1))
+			if punct_ratio > 0.35:
+				continue
+			# Evitar secuencias repetidas tipo 'aaaa', 'asdadsad' detectando baja diversidad
+			diversidad = len(set([c for c in w.lower() if c.isalpha()]))
+			if diversidad < 3 and len(w) > 4:
+				continue
+			clean.append(w)
+		if not clean:
+			return ''
+		# Construir frase compacta (máx 3 elementos)
+		return ", ".join(clean[:3])
+
 	def _simple_explanation(
 		self,
 		cargo: str,
@@ -63,7 +95,7 @@ class AIPersonalizer:
 		soft_skills: List[int]
 	) -> str:
 		# Generar un texto breve con variación determinística por oferta
-		asignaturas_txt = asignaturas.strip()
+		asignaturas_txt = self._clean_subjects(asignaturas)
 		picked = self._pick_skills(skills)
 		# Construir pistas sin 'nan' ni ruido
 		use_eur = bool((eurace_skills or '').strip())
@@ -80,14 +112,14 @@ class AIPersonalizer:
 		seed_base = f"{cargo}|{carrera}|{asignaturas_txt}|{','.join(picked)}"
 		seed = int(hashlib.md5(seed_base.encode('utf-8')).hexdigest(), 16)
 		templates = [
-			"'{cargo}' encaja con {carrera}. {asig} {razon}.",
-			"{carrera}: '{cargo}' muestra alineación con tu perfil. {asig} {razon}.",
-			"Tu formación en {carrera} conecta naturalmente con '{cargo}'. {asig} {razon}.",
-			"'{cargo}' es una oportunidad afín a {carrera}. {asig} {razon}."
+			"'{cargo}' es pertinente para perfiles de {carrera}. {asig} {razon}.",
+			"En {carrera}, '{cargo}' destaca como opción sólida. {asig} {razon}.",
+			"La base de {carrera} sustenta '{cargo}' con buen potencial. {asig} {razon}.",
+			"'{cargo}' guarda relación directa con {carrera}. {asig} {razon}."
 		]
 		idx = seed % len(templates)
-		asig = f"Asignaturas: {asignaturas_txt}." if asignaturas_txt else ""
-		razon = f"Refuerzan el encaje {pista_txt}." if pista_txt else ""
+		asig = f"Asignaturas relevantes: {asignaturas_txt}." if asignaturas_txt else ""
+		razon = f"Se sustentan en {pista_txt}." if pista_txt else ""
 		line = templates[idx].format(cargo=cargo, carrera=carrera, asig=asig, razon=razon).strip()
 		# Evitar puntos dobles o espacios redundantes
 		line = re.sub(r"\s+", " ", line).strip()
@@ -314,11 +346,12 @@ class AIPersonalizer:
 	) -> str:
 		lines = [
 			"Vas a producir una línea por oferta, en el formato 'N. mensaje'.",
-			"Cada mensaje debe tener 3–4 frases y VARIAR el estilo entre ofertas (sin repetir la misma estructura).",
-			"Incluye: 1) de qué va el rol, 2) por qué encaja con el usuario usando asignaturas y/o EURACE, 3) menciona 1–2 skills técnicas de 'Skills' si aportan contexto.",
-			"Evita frases genéricas como 'refuerzan el encaje'; usa sinónimos y concreciones distintas por línea.",
+			"Cada mensaje debe tener 3–4 frases y VARIAR el estilo entre ofertas (sin repetir la misma estructura ni frases).",
+			"Incluye: 1) resumen del rol, 2) vínculo con el usuario (usa asignaturas solo si tienen sentido; ignora cadenas sin sentido), 3) menciona 1–2 skills técnicas de 'Skills' si aportan contexto.",
+			"Prohibido usar las palabras 'encaja' o 'refuerzan el encaje'. Emplea redacciones profesionales, académicas y éticas.",
+			"Evita 'nan' y tokens ruidosos; si 'Skills' no aporta, omítelo sin rellenar texto genérico.",
 			f"Carrera del usuario: {carrera}",
-			f"Asignaturas relevantes del usuario: {asignaturas}",
+			f"Asignaturas relevantes del usuario: {self._clean_subjects(asignaturas)}",
 			f"Soft skills (1–5): {soft_skills}",
 			"\nOfertas:"
 		]
@@ -341,11 +374,11 @@ class AIPersonalizer:
 			"Escribe una línea por oferta alternativa, formato 'N. mensaje'.",
 			"Cada mensaje debe tener 2–3 frases y VARIAR el estilo entre ofertas (sin repetir la misma frase o estructura).",
 			"Enfócate en 1–2 habilidades blandas que el usuario debe mejorar (no resaltes las que ya domina).",
-			"Incluye: (1) resumen del cargo; (2) cómo reforzar esas habilidades mejora el encaje/proyección (más ofertas, mejor remuneración, crecimiento); (3) menciona 1–2 skills técnicas de 'Skills' si aportan contexto.",
-			"Si solo hay 1 habilidad sugerida, usa forma singular (esta habilidad). Si hay 2, menciona ambas de forma natural (conectadas por 'y').",
-			"Evita la frase 'esta oportunidad te ofrece mejores oportunidades a futuro' y sus variantes; usa sinónimos y paráfrasis.",
+			"Incluye: (1) resumen del cargo; (2) cómo fortalecer esas habilidades mejora la proyección (más ofertas, mejor remuneración, crecimiento); (3) menciona 1–2 skills técnicas de 'Skills' si aportan contexto.",
+			"Si solo hay 1 habilidad sugerida, usa forma singular; si hay 2, menciona ambas de forma natural.",
+			"Prohibido usar las palabras 'encaja' o 'refuerzan el encaje'. Evita frases hechas como 'hará que el salto sea tangible'.",
 			f"Carrera del usuario: {carrera}",
-			f"Asignaturas relevantes del usuario: {asignaturas}",
+			f"Asignaturas relevantes del usuario: {self._clean_subjects(asignaturas)}",
 			f"Soft skills actuales (1–5): {soft_skills}",
 			"\nOfertas alternativas (con 'suggest_soft'):" 
 		]
@@ -369,11 +402,11 @@ class AIPersonalizer:
 	def _alt_extra_phrase(self, cargo: str, sugeridas: List[str], tech_skills: List[str]) -> str:
 		seed = int(hashlib.md5((cargo + '|' + ' '.join(sugeridas)).encode('utf-8')).hexdigest(), 16)
 		templates = [
-			"Si fortaleces {obj}, podrás aspirar a responsabilidades más estratégicas y mejor remuneradas.",
-			"Al incorporar {obj}, tu perfil ganará tracción para proyectos de mayor impacto y liderazgo.",
-			"Con {obj}, mejorarás tu encaje y tendrás margen para negociar mejores condiciones.",
-			"Al desarrollar {obj}, acelerarás tu crecimiento hacia posiciones de referencia en el área.",
-			"Si potencias {obj}, destacarás en procesos selectivos con mayores exigencias técnicas y de gestión."
+			"Si fortaleces {obj}, accederás a retos con mayor alcance y mejor proyección.",
+			"Al incorporar {obj}, ganarás tracción hacia proyectos de impacto y liderazgo.",
+			"Con {obj}, ampliarás tu margen para roles con mejores condiciones y responsabilidad.",
+			"Al desarrollar {obj}, acelerarás tu avance hacia posiciones de referencia.",
+			"Si potencias {obj}, destacarás en procesos con mayores exigencias técnicas y de gestión."
 		]
 		idx = seed % len(templates)
 		if len(sugeridas) <= 1:
@@ -382,7 +415,7 @@ class AIPersonalizer:
 			obj = f"estas habilidades ({self._spanish_join(sugeridas[:2])})"
 		extra = templates[idx].format(obj=obj)
 		if tech_skills:
-			extra += f" En paralelo, tus bases técnicas en {self._spanish_join(tech_skills)} harán que el salto sea tangible."
+			extra += f" En paralelo, tus bases técnicas en {self._spanish_join(tech_skills)} consolidarán tu aporte en el rol."
 		return extra
 
 	def _pick_skills(self, skills_text: str) -> List[str]:
