@@ -1,7 +1,6 @@
 """Data loader module - Manages loading and caching of processed data"""
 import os
 import pickle
-import httpx
 import pandas as pd
 import numpy as np
 from pathlib import Path
@@ -88,6 +87,14 @@ class DataManager:
 
     def _download_data(self, url: str, dest_path: Path) -> None:
         """Download the data pickle from a remote URL to the destination path"""
+        # Lazy import to avoid hard dependency when DATA_URL no se usa
+        try:
+            import httpx
+        except Exception as ie:
+            raise RuntimeError(
+                "No se pudo importar httpx para descargar los datos. Instala dependencias con 'pip install -r requirements.txt' o instala httpx ('pip install httpx')."
+            ) from ie
+
         dest_path.parent.mkdir(parents=True, exist_ok=True)
         with httpx.stream('GET', url, timeout=60) as resp:
             resp.raise_for_status()
