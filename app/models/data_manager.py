@@ -36,7 +36,21 @@ class DataManager:
             app_path = app_dir / 'datos_procesados.pkl'
             root_path = app_dir.parent / 'datos_procesados.pkl'
 
-            candidates = [p for p in [env_path, config_path, app_path, root_path] if p]
+            # Si DATA_DIR apunta a un directorio, unimos el nombre por defecto
+            norm_candidates = []
+            for p in [env_path, config_path, app_path, root_path]:
+                if not p:
+                    continue
+                try:
+                    if p.exists() and p.is_dir():
+                        norm_candidates.append(p / 'datos_procesados.pkl')
+                    else:
+                        norm_candidates.append(p)
+                except Exception:
+                    # Si falla exists() porque p es inválido, lo omitimos
+                    continue
+
+            candidates = [p for p in norm_candidates if p]
             pkl_path = None
             for p in candidates:
                 if p.exists():
@@ -44,7 +58,16 @@ class DataManager:
                     break
 
             if pkl_path is None:
-                raise FileNotFoundError("datos_procesados.pkl no encontrado en rutas esperadas: DATA_DIR, Config.DATA_DIR, app/, raíz del proyecto")
+                # Si no existe el archivo pero tenemos DATA_URL, intentamos descargarlo al app_dir
+                data_url = os.environ.get('DATA_URL') or getattr(Config, 'DATA_URL', None)
+                if data_url:
+                    pkl_path = app_dir / 'datos_procesados.pkl'
+                    print(f"Archivo de datos no encontrado. Descargando desde DATA_URL hacia {pkl_path}...")
+                    self._download_data(data_url, pkl_path)
+                else:
+                    raise FileNotFoundError(
+                        "datos_procesados.pkl no encontrado en rutas esperadas: DATA_DIR, Config.DATA_DIR, app/, raíz del proyecto"
+                    )
 
             # Detect Git LFS pointer file to provide a clear error
             with open(pkl_path, 'rb') as fb:
@@ -52,7 +75,7 @@ class DataManager:
                 # LFS pointer files are small text files starting with 'version https://git-lfs.github.com/spec/v1'
                 if head.startswith(b'version https://git-lfs.github.com/spec/v1'):
                     # Try remote download fallback if DATA_URL is provided
-                    data_url = os.environ.get('DATA_URL')
+                    data_url = os.environ.get('DATA_URL') or getattr(Config, 'DATA_URL', None)
                     if data_url:
                         print(f"Detectado puntero Git LFS en {pkl_path}. Intentando descargar datos desde DATA_URL...")
                         try:
@@ -71,11 +94,24 @@ class DataManager:
                                 "Alternativa: ejecuta 'git lfs install' y 'git lfs pull' en el servidor EC2."
                             )
                     else:
-                        raise RuntimeError(
-                            f"El archivo {pkl_path} es un puntero de Git LFS y no contiene los datos reales. "
-                            "En el servidor EC2 ejecuta: 'git lfs install' y luego 'git lfs pull' para descargar el binario, "
-                            "o configura la variable de entorno DATA_URL con una URL directa al archivo binario."
-                        )
+                        # Intento opcional: si git y git-lfs están disponibles, intentamos un pull automático
+                        try:
+                            if self._try_git_lfs_pull(app_dir.parent):
+                                with open(pkl_path, 'rb') as fb3:
+                                    chk = fb3.read(64)
+                                if chk.startswith(b'version https://git-lfs.github.com/spec/v1'):
+                                    raise RuntimeError(
+                                        "Se ejecutó 'git lfs pull' pero el archivo sigue siendo un puntero LFS. "
+                                        "Configura DATA_URL o realiza el 'git lfs pull' manualmente."
+                                    )
+                            else:
+                                raise RuntimeError(
+                                    f"El archivo {pkl_path} es un puntero de Git LFS y no contiene los datos reales. "
+                                    "En el servidor EC2 ejecuta: 'git lfs install' y luego 'git lfs pull' para descargar el binario, "
+                                    "o configura la variable de entorno DATA_URL con una URL directa al archivo binario."
+                                )
+                        except Exception as ge:
+                            raise RuntimeError(str(ge))
 
             # Load pickle
             with open(pkl_path, 'rb') as f:
@@ -101,6 +137,27 @@ class DataManager:
             with open(dest_path, 'wb') as out:
                 for chunk in resp.iter_bytes():
                     out.write(chunk)
+
+    def _try_git_lfs_pull(self, repo_root: Path) -> bool:
+        """Try to run 'git lfs install' and 'git lfs pull' in the repository root.
+        Returns True if commands executed without error and likely fetched binaries.
+        """
+        import shutil
+        import subprocess
+        git_path = shutil.which('git')
+        if not git_path:
+            return False
+        # Check if git lfs is available
+        try:
+            subprocess.run([git_path, 'lfs', 'version'], cwd=str(repo_root), capture_output=True, timeout=10)
+        except Exception:
+            return False
+        try:
+            subprocess.run([git_path, 'lfs', 'install', '--local'], cwd=str(repo_root), check=False, capture_output=True, timeout=60)
+            result = subprocess.run([git_path, 'lfs', 'pull'], cwd=str(repo_root), check=False, capture_output=True, timeout=300)
+            return result.returncode == 0
+        except Exception:
+            return False
     
     @property
     def habilidades(self) -> list:

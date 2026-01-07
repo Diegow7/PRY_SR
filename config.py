@@ -14,7 +14,10 @@ class Config:
     JSON_SORT_KEYS = False
     
     # Data paths
+    # Nota: aunque el nombre es DATA_DIR, aquí apunta al archivo por compatibilidad
     DATA_DIR = BASE_DIR / 'datos_procesados.pkl'
+    # URL opcional para descargar el pickle si no existe o es puntero LFS
+    DATA_URL = os.environ.get('DATA_URL')
     CARRERAS_EPN_CSV = BASE_DIR / 'carreras_epn' / 'carreras_epn.csv'
     OFERTAS_BASE_DIR = BASE_DIR / 'todas_las_plataformas'
     
