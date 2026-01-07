@@ -42,6 +42,7 @@ class AIPersonalizer:
 		self._enabled = False
 		self._model = os.getenv('OPENAI_MODEL', '').strip()
 		api_key = os.getenv('OPENAI_API_KEY', '').strip()
+		self._require_llm = os.getenv('AI_PERSONALIZER_REQUIRE_LLM', '').strip().lower() in {'1','true','yes'}
 		self._enabled = bool(api_key and self._model)
 		self._client = None
 		if self._enabled:
@@ -51,6 +52,9 @@ class AIPersonalizer:
 			except Exception:
 				# Si no se puede inicializar, desactivar silenciosamente
 				self._enabled = False
+		# Advertir en consola si se requiere LLM pero no está habilitado
+		if self._require_llm and not self._enabled:
+			print('[AIPersonalizer] Advertencia: AI_PERSONALIZER_REQUIRE_LLM está activo, pero OPENAI_API_KEY/OPENAI_MODEL no están configurados o el cliente no pudo inicializarse.')
 
 	def _clean_subjects(self, asignaturas: str) -> str:
 		"""Sanear asignaturas para evitar basura (ej. 'asdadsad'). Devuelve frase breve o ''"""
@@ -213,6 +217,9 @@ class AIPersonalizer:
 		asignaturas: str,
 		soft_skills: List[int]
 	) -> str:
+		# Si se requiere LLM y no está habilitado, informar de manera explícita
+		if self._require_llm and not self._enabled:
+			return self._clean_text_out('Configura OPENAI_API_KEY y OPENAI_MODEL para generar textos únicos con LLM.')
 		# Si OpenAI está disponible, intentar explicación con LLM
 		if self._enabled and self._client is not None:
 			try:
@@ -236,6 +243,9 @@ class AIPersonalizer:
 		asignaturas: str,
 		soft_skills: List[int]
 	) -> List[str]:
+		if self._require_llm and not self._enabled:
+			# devolver mensajes explicativos para que el consumidor detecte la falta de LLM
+			return [self._clean_text_out('Configura OPENAI_API_KEY y OPENAI_MODEL para generar textos únicos en lote.') for _ in items]
 		if self._enabled and self._client is not None and items:
 			try:
 				prompt = self._build_batch_prompt(items, carrera, asignaturas, soft_skills)
@@ -296,6 +306,8 @@ class AIPersonalizer:
 		asignaturas: str,
 		soft_skills: List[int]
 	) -> List[str]:
+		if self._require_llm and not self._enabled:
+			return [self._clean_text_out('Configura OPENAI_API_KEY y OPENAI_MODEL para generar textos alternativos únicos.') for _ in items]
 		if self._enabled and self._client is not None and items:
 			try:
 				prompt = self._build_alt_batch_prompt(items, carrera, asignaturas, soft_skills)
@@ -336,6 +348,9 @@ class AIPersonalizer:
 		asignaturas: str,
 		soft_skills: List[int]
 	) -> str:
+		# Si se requiere LLM y no está habilitado, informar
+		if self._require_llm and not self._enabled:
+			return self._clean_text_out('Configura OPENAI_API_KEY y OPENAI_MODEL para un consejo personalizado único.')
 		# Si OpenAI está disponible, generar consejo personalizado (2–3 frases)
 		if self._enabled and self._client is not None:
 			try:
