@@ -23,7 +23,12 @@ class Config:
     DEFAULT_RECOMMENDATIONS = 5
     
     # CORS settings
-    CORS_ORIGINS = ['http://localhost:3000', 'http://localhost:5173', 'http://localhost:5000']
+    CORS_ORIGINS = [
+        'http://localhost:3000',
+        'http://localhost:5173',
+        'http://localhost:5000',
+        'http://127.0.0.1:5000'
+    ]
 
 
 class DevelopmentConfig(Config):

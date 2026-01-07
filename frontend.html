@@ -239,8 +239,8 @@
         input.addEventListener('input', () => { out.textContent = input.value; });
       });
 
-      // Populate careers
-      fetch('http://localhost:5000/api/recommendations/careers')
+      // Populate careers (use same-origin to avoid CORS)
+      fetch('/api/recommendations/careers')
         .then(res => res.json())
         .then(data => {
           const select = document.getElementById('career');
@@ -335,7 +335,7 @@
         const altPayload = { carrera: career, asignaturas: subjects, soft_skills: softSkills, include_alt: true };
 
         try {
-          const res = await fetch('http://localhost:5000/api/recommendations/predict', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+          const res = await fetch('/api/recommendations/predict', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
           const data = await res.json();
           if (!data.success) { err.textContent = data.message || 'Error en la recomendación.'; btn.disabled = false; btn.textContent = 'Obtener recomendaciones'; return; }
           const recs = data.data.recomendaciones;
@@ -345,7 +345,7 @@
 
           // Fetch alt async
           try {
-            const resAlt = await fetch('http://localhost:5000/api/recommendations/predict', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(altPayload) });
+            const resAlt = await fetch('/api/recommendations/predict', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(altPayload) });
             const dataAlt = await resAlt.json();
             if (dataAlt.success) {
               const consejo = sanitizeAdvice((dataAlt.data.mejora_soft_skills_mensaje || '').trim());
