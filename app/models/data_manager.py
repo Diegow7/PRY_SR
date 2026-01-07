@@ -1,6 +1,7 @@
 """Data loader module - Manages loading and caching of processed data"""
 import os
 import pickle
+import httpx
 import pandas as pd
 import numpy as np
 from pathlib import Path
@@ -26,7 +27,7 @@ class DataManager:
             self._is_loaded = True
     
     def _load_data(self) -> None:
-        """Load all processed data from pickle file with robust path and LFS check"""
+        """Load all processed data from pickle file with robust path and LFS/remote fallback"""
         try:
             # Candidate paths (env > config > app > project root)
             from config import Config  # local import to avoid cycles
@@ -51,10 +52,31 @@ class DataManager:
                 head = fb.read(64)
                 # LFS pointer files are small text files starting with 'version https://git-lfs.github.com/spec/v1'
                 if head.startswith(b'version https://git-lfs.github.com/spec/v1'):
-                    raise RuntimeError(
-                        f"El archivo {pkl_path} es un puntero de Git LFS y no contiene los datos reales. "
-                        "En el servidor EC2 ejecuta: 'git lfs install' y luego 'git lfs pull' para descargar el binario."
-                    )
+                    # Try remote download fallback if DATA_URL is provided
+                    data_url = os.environ.get('DATA_URL')
+                    if data_url:
+                        print(f"Detectado puntero Git LFS en {pkl_path}. Intentando descargar datos desde DATA_URL...")
+                        try:
+                            self._download_data(data_url, pkl_path)
+                            # Re-check file header
+                            with open(pkl_path, 'rb') as fb2:
+                                new_head = fb2.read(64)
+                            if new_head.startswith(b'version https://git-lfs.github.com/spec/v1'):
+                                raise RuntimeError(
+                                    f"La descarga desde DATA_URL ({data_url}) parece incorrecta; el archivo sigue siendo puntero LFS. "
+                                    "Verifica la URL o ejecuta 'git lfs pull' en el servidor."
+                                )
+                        except Exception as de:
+                            raise RuntimeError(
+                                f"No fue posible descargar el archivo de datos desde DATA_URL ({data_url}): {de}. "
+                                "Alternativa: ejecuta 'git lfs install' y 'git lfs pull' en el servidor EC2."
+                            )
+                    else:
+                        raise RuntimeError(
+                            f"El archivo {pkl_path} es un puntero de Git LFS y no contiene los datos reales. "
+                            "En el servidor EC2 ejecuta: 'git lfs install' y luego 'git lfs pull' para descargar el binario, "
+                            "o configura la variable de entorno DATA_URL con una URL directa al archivo binario."
+                        )
 
             # Load pickle
             with open(pkl_path, 'rb') as f:
@@ -63,6 +85,15 @@ class DataManager:
             print(f"✓ Datos procesados cargados desde {pkl_path}")
         except Exception as e:
             raise RuntimeError(f"Error cargando datos procesados: {str(e)}")
+
+    def _download_data(self, url: str, dest_path: Path) -> None:
+        """Download the data pickle from a remote URL to the destination path"""
+        dest_path.parent.mkdir(parents=True, exist_ok=True)
+        with httpx.stream('GET', url, timeout=60) as resp:
+            resp.raise_for_status()
+            with open(dest_path, 'wb') as out:
+                for chunk in resp.iter_bytes():
+                    out.write(chunk)
     
     @property
     def habilidades(self) -> list:
