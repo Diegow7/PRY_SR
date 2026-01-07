@@ -2,8 +2,8 @@
 import os
 from pathlib import Path
 
-# Base directory
-BASE_DIR = Path(__file__).parent.parent
+# Base directory (project root)
+BASE_DIR = Path(__file__).parent
 
 class Config:
     """Base configuration"""

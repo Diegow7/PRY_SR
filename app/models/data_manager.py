@@ -1,4 +1,5 @@
 """Data loader module - Manages loading and caching of processed data"""
+import os
 import pickle
 import pandas as pd
 import numpy as np
@@ -25,18 +26,40 @@ class DataManager:
             self._is_loaded = True
     
     def _load_data(self) -> None:
-        """Load all processed data from pickle file"""
+        """Load all processed data from pickle file with robust path and LFS check"""
         try:
-            # Get the parent directory of backend
-            backend_dir = Path(__file__).parent.parent
-            pkl_path = backend_dir / 'datos_procesados.pkl'
-            
-            if not pkl_path.exists():
-                raise FileNotFoundError(f"datos_procesados.pkl not found at {pkl_path}")
-            
+            # Candidate paths (env > config > app > project root)
+            from config import Config  # local import to avoid cycles
+            env_path = Path(str(os.environ.get('DATA_DIR', ''))) if os.environ.get('DATA_DIR') else None
+            config_path = Path(Config.DATA_DIR) if hasattr(Config, 'DATA_DIR') else None
+            app_dir = Path(__file__).parent.parent
+            app_path = app_dir / 'datos_procesados.pkl'
+            root_path = app_dir.parent / 'datos_procesados.pkl'
+
+            candidates = [p for p in [env_path, config_path, app_path, root_path] if p]
+            pkl_path = None
+            for p in candidates:
+                if p.exists():
+                    pkl_path = p
+                    break
+
+            if pkl_path is None:
+                raise FileNotFoundError("datos_procesados.pkl no encontrado en rutas esperadas: DATA_DIR, Config.DATA_DIR, app/, raíz del proyecto")
+
+            # Detect Git LFS pointer file to provide a clear error
+            with open(pkl_path, 'rb') as fb:
+                head = fb.read(64)
+                # LFS pointer files are small text files starting with 'version https://git-lfs.github.com/spec/v1'
+                if head.startswith(b'version https://git-lfs.github.com/spec/v1'):
+                    raise RuntimeError(
+                        f"El archivo {pkl_path} es un puntero de Git LFS y no contiene los datos reales. "
+                        "En el servidor EC2 ejecuta: 'git lfs install' y luego 'git lfs pull' para descargar el binario."
+                    )
+
+            # Load pickle
             with open(pkl_path, 'rb') as f:
                 self._datos_procesados = pickle.load(f)
-            
+
             print(f"✓ Datos procesados cargados desde {pkl_path}")
         except Exception as e:
             raise RuntimeError(f"Error cargando datos procesados: {str(e)}")
