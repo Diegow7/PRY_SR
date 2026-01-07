@@ -65,7 +65,7 @@ class AIPersonalizer:
 			if not w:
 				continue
 			# Heurísticas de sentido: contiene letras y vocales, baja puntuación, no 'nan'
-			if w.lower() == 'nan':
+			if self._normalize(w) in {'nan', 'null', 'none'}:
 				continue
 			if not re.search(r"[A-Za-zÁÉÍÓÚáéíóúñ]", w):
 				continue
@@ -83,6 +83,39 @@ class AIPersonalizer:
 			return ''
 		# Construir frase compacta (máx 3 elementos)
 		return ", ".join(clean[:3])
+
+	def _normalize(self, s: str) -> str:
+		return re.sub(r"[^A-Za-zÁÉÍÓÚáéíóúñ]+", "", (s or "").lower())
+
+	def _is_noise_token(self, s: str) -> bool:
+		ns = self._normalize(s)
+		if not ns:
+			return True
+		if ns in {"nan", "null", "none"}:
+			return True
+		if len(ns) <= 2:
+			return True
+		return False
+
+	def _clean_text_out(self, text: str) -> str:
+		t = (text or "").strip()
+		if not t:
+			return ""
+		# eliminar tokens tipo 'nan', 'n/a', 'null', 'none' con puntuación o puntos de arrastre
+		t = re.sub(r"(?i)\b(?:nan|n/?a|null|none)\b(?:\s*[\.…,;:\-]*)?", "", t)
+		# colapsar puntuación repetida
+		t = re.sub(r"[\.]{2,}", ".", t)
+		# arreglar espacios antes de signos y dobles espacios
+		t = re.sub(r"\s+", " ", t)
+		t = re.sub(r"\s([\.!?,;:])", r"\1", t)
+		# conectores huérfanos tras limpieza (e.g., ' y .')
+		t = t.replace(" y .", ".")
+		t = t.replace(" e .", ".")
+		t = t.replace(" o .", ".")
+		# limpiar comas/puntos mal formados
+		t = t.replace(", .", ".")
+		t = t.replace(" ,", ",")
+		return t.strip()
 
 	def _simple_explanation(
 		self,
@@ -123,6 +156,7 @@ class AIPersonalizer:
 		line = templates[idx].format(cargo=cargo, carrera=carrera, asig=asig, razon=razon).strip()
 		# Evitar puntos dobles o espacios redundantes
 		line = re.sub(r"\s+", " ", line).strip()
+		line = self._clean_text_out(line)
 		return line
 
 	def personalize_description(
@@ -143,13 +177,13 @@ class AIPersonalizer:
 				)
 				msg = self._chat(prompt)
 				if msg:
-					return msg
+					return self._clean_text_out(msg)
 			except Exception:
 				pass
 		# Fallback determinístico
-		return self._simple_explanation(
+		return self._clean_text_out(self._simple_explanation(
 			cargo, descripcion, eurace_skills, skills, carrera, asignaturas, soft_skills
-		)
+		))
 
 	def personalize_batch(
 		self,
@@ -162,31 +196,31 @@ class AIPersonalizer:
 			try:
 				prompt = self._build_batch_prompt(items, carrera, asignaturas, soft_skills)
 				# Mayor variación de estilo y longitud controlada
-				text = self._chat(prompt, temperature=0.5, presence_penalty=0.2, frequency_penalty=0.2, max_tokens=900)
-				parsed = self._parse_batch_lines(text, expected=len(items))
-				if parsed and len(parsed) == len(items):
-					# Ensure each line is complete; replace suspiciously short/truncated lines with deterministic fallback
+				text = self._chat(prompt, temperature=0.55, presence_penalty=0.25, frequency_penalty=0.25, max_tokens=1100)
+				parsed = self._parse_json_array(text, expected=len(items))
+				if not parsed:
+					parsed = self._parse_batch_lines(text, expected=len(items))
+				if parsed and len(parsed) >= len(items):
 					final: List[str] = []
 					for idx, it in enumerate(items):
 						line = (parsed[idx] or '').strip()
-						# Heuristic: consider truncated if very short or missing terminal punctuation
+						# Limpieza y validación de calidad
+						line = self._clean_text_out(line)
 						is_short = len(line) < 80
 						ends_ok = bool(re.search(r"[\.!?]$", line))
-						if is_short or not ends_ok:
-							final.append(
-								self._simple_explanation(
-									cargo=it.get('cargo', ''),
-									descripcion=it.get('descripcion', ''),
-									eurace_skills=it.get('eurace_skills', ''),
-									skills=it.get('skills', ''),
-									carrera=carrera,
-									asignaturas=asignaturas,
-									soft_skills=soft_skills,
-								)
-							)
-						else:
-							final.append(line)
-					return final
+						if not ends_ok:
+							line += "."
+						if is_short:
+							# Completar con una frase breve basada en skills si falta
+							tech = self._pick_skills(it.get('skills',''))
+							if tech:
+								line += f" Destaca el uso de {self._spanish_join(tech)} en el puesto."
+							else:
+								line += f" Apoya el desarrollo del perfil de {carrera}."
+						final.append(line)
+					# Forzar diversidad básica si hay duplicados evidentes
+					final = self._enforce_diversity(final, items, carrera)
+					return final[:len(items)]
 			except Exception:
 				pass
 		# Fallback determinístico
@@ -215,10 +249,13 @@ class AIPersonalizer:
 		if self._enabled and self._client is not None and items:
 			try:
 				prompt = self._build_alt_batch_prompt(items, carrera, asignaturas, soft_skills)
-				text = self._chat(prompt, temperature=0.5, presence_penalty=0.2, frequency_penalty=0.2, max_tokens=320)
-				parsed = self._parse_batch_lines(text, expected=len(items))
+				text = self._chat(prompt, temperature=0.55, presence_penalty=0.25, frequency_penalty=0.25, max_tokens=450)
+				parsed = self._parse_json_array(text, expected=len(items))
+				if not parsed:
+					parsed = self._parse_batch_lines(text, expected=len(items))
 				if parsed:
-					return parsed
+					cleaned = [self._clean_text_out(p) for p in parsed]
+					return self._enforce_diversity(cleaned, items, carrera)[:len(items)]
 			except Exception:
 				pass
 		explicaciones: List[str] = []
@@ -240,7 +277,7 @@ class AIPersonalizer:
 			else:
 				tech = self._pick_skills(it.get('skills',''))
 				extra = self._alt_extra_phrase(it.get('cargo',''), [], tech)
-			explicaciones.append(base + " " + extra)
+			explicaciones.append(self._clean_text_out(base + " " + extra))
 		return explicaciones
 
 	def soft_skills_advice(
@@ -253,18 +290,18 @@ class AIPersonalizer:
 		if self._enabled and self._client is not None:
 			try:
 				prompt = (
-					"Redacta un mensaje breve (2–3 frases) y personalizado para mostrar justo después del título 'Oportunidades si mejoras tus habilidades blandas'. "
-					"No repitas el título, no uses markdown ni asteriscos. "
-					"Incluye: (1) por qué reforzar 1–2 habilidades más bajas del usuario (no resaltes las que ya domina) es beneficioso (más ofertas, mejor remuneración o crecimiento); "
-					"(2) reconoce 1 fortaleza si existe sin desviarte del foco; (3) sugiere 2 prácticas concretas. Sé directo, inspirador y sin ambigüedades.\n\n"
+					"Redacta un solo párrafo (2–3 frases), claro y personalizado, para mostrar tras el título 'Oportunidades si mejoras tus habilidades blandas'. "
+					"NO repitas el título ni comiences con 'Para impulsar'. Evita markdown. "
+					"Incluye: (1) por qué reforzar 1–2 habilidades más bajas del usuario (no resaltes las más altas) genera beneficios concretos (más ofertas, mejor remuneración, crecimiento); "
+					"(2) reconoce brevemente 1 fortaleza si existe; (3) sugiere 2 prácticas específicas y accionables relacionadas con la carrera/asignaturas. Tono profesional, variado y no genérico.\n\n"
 					f"Carrera: {carrera}\n"
-					f"Asignaturas del usuario: {asignaturas}\n"
-					f"Soft skills (1–5): {soft_skills}\n"
+					f"Asignaturas (limpias si aplican): {self._clean_subjects(asignaturas)}\n"
+					f"Puntajes de soft skills (1–5): {soft_skills}\n"
 					f"Etiquetas soft: {self.SOFT_SKILLS_LABELS}\n"
 				)
-				msg = self._chat(prompt, temperature=0.4, presence_penalty=0.2, frequency_penalty=0.2, max_tokens=220)
+				msg = self._chat(prompt, temperature=0.5, presence_penalty=0.2, frequency_penalty=0.2, max_tokens=230)
 				if msg:
-					return msg
+					return self._clean_text_out(msg)
 			except Exception:
 				pass
 
@@ -325,16 +362,16 @@ class AIPersonalizer:
 		soft_skills: List[int]
 	) -> str:
 		return (
-			"Genera una explicación breve (3–4 frases) y clara para mostrar en una tarjeta de trabajo. "
-			"Incluye: 1) de qué va el cargo, 2) por qué encaja con el usuario usando asignaturas y EURACE, 3) menciona 1–2 skills técnicas explícitas de 'Skills técnicas' si existen. "
-			"Evita repetir texto raro; sé específico y fácil de leer.\n\n"
+			"Escribe un texto breve (3–4 frases) para una tarjeta de trabajo. "
+			"Requisitos: (1) resume el rol; (2) vincúlalo con la carrera del usuario usando asignaturas válidas y EURACE si aportan; (3) menciona 1–2 skills técnicas si son relevantes. "
+			"Evita palabras como 'encaja' y cualquier token ruidoso (p. ej., 'nan'). Varía estructuras de frase y evita plantillas genéricas.\n\n"
 			f"Cargo: {cargo}\n"
-			f"Descripción (ruidosa): {descripcion}\n"
+			f"Descripción (puede contener ruido): {descripcion}\n"
 			f"EURACE_skills: {eurace_skills}\n"
 			f"Skills técnicas: {skills}\n"
 			f"Carrera del usuario: {carrera}\n"
-			f"Asignaturas relevantes del usuario: {asignaturas}\n"
-			f"Autoevaluación soft skills (1–5, 69–75): {soft_skills}\n"
+			f"Asignaturas del usuario (limpias si aplican): {self._clean_subjects(asignaturas)}\n"
+			f"Autoevaluación soft skills (1–5): {soft_skills}\n"
 		)
 
 	def _build_batch_prompt(
@@ -344,23 +381,33 @@ class AIPersonalizer:
 		asignaturas: str,
 		soft_skills: List[int]
 	) -> str:
+		styles = [
+			"analítico",
+			"concreto",
+			"académico",
+			"orientado a impacto",
+			"motivador",
+			"estratégico",
+		]
 		lines = [
-			"Vas a producir una línea por oferta, en el formato 'N. mensaje'.",
-			"Cada mensaje debe tener 3–4 frases y VARIAR el estilo entre ofertas (sin repetir la misma estructura ni frases).",
-			"Incluye: 1) resumen del rol, 2) vínculo con el usuario (usa asignaturas solo si tienen sentido; ignora cadenas sin sentido), 3) menciona 1–2 skills técnicas de 'Skills' si aportan contexto.",
-			"Prohibido usar las palabras 'encaja' o 'refuerzan el encaje'. Emplea redacciones profesionales, académicas y éticas.",
-			"Evita 'nan' y tokens ruidosos; si 'Skills' no aporta, omítelo sin rellenar texto genérico.",
+			"Genera EXACTAMENTE un arreglo JSON de cadenas (sin texto extra).",
+			"Cada elemento es el mensaje para una oferta: 3–4 frases, tono profesional y ético.",
+			"Varía el inicio y la estructura entre elementos; evita frases hechas o plantillas repetidas.",
+			"Incluye: (1) resumen del rol; (2) vínculo con la carrera del usuario usando asignaturas válidas y/o EURACE; (3) 1–2 skills técnicas SOLO si aportan contexto real.",
+			"Prohibido usar 'encaja/encaje'. No incluyas 'nan' ni cadenas sin sentido.",
 			f"Carrera del usuario: {carrera}",
-			f"Asignaturas relevantes del usuario: {self._clean_subjects(asignaturas)}",
+			f"Asignaturas (limpias si aplican): {self._clean_subjects(asignaturas)}",
 			f"Soft skills (1–5): {soft_skills}",
-			"\nOfertas:"
+			"Para forzar diversidad, asigna estos estilos en orden (y repite si faltan): analítico, concreto, académico, orientado a impacto, motivador, estratégico.",
+			"Ofertas:",
 		]
 		for i, it in enumerate(items, 1):
+			style = styles[(i - 1) % len(styles)]
 			lines.append(
 				f"{i}) Cargo: {it.get('cargo','')}; Desc: {it.get('descripcion','')}; "
-				f"EURACE: {it.get('eurace_skills','')}; Skills: {it.get('skills','')}"
+				f"EURACE: {it.get('eurace_skills','')}; Skills: {it.get('skills','')}; Estilo: {style}"
 			)
-		lines.append(f"\nDevuelve exactamente {len(items)} líneas, una por oferta, en el formato 'N. mensaje'.")
+		lines.append(f"Devuelve solo el arreglo JSON con {len(items)} elementos.")
 		return "\n".join(lines)
 
 	def _build_alt_batch_prompt(
@@ -370,24 +417,32 @@ class AIPersonalizer:
 		asignaturas: str,
 		soft_skills: List[int]
 	) -> str:
+		styles = [
+			"analítico",
+			"concreto",
+			"académico",
+			"orientado a impacto",
+			"motivador",
+			"estratégico",
+		]
 		lines = [
-			"Escribe una línea por oferta alternativa, formato 'N. mensaje'.",
-			"Cada mensaje debe tener 2–3 frases y VARIAR el estilo entre ofertas (sin repetir la misma frase o estructura).",
-			"Enfócate en 1–2 habilidades blandas que el usuario debe mejorar (no resaltes las que ya domina).",
-			"Incluye: (1) resumen del cargo; (2) cómo fortalecer esas habilidades mejora la proyección (más ofertas, mejor remuneración, crecimiento); (3) menciona 1–2 skills técnicas de 'Skills' si aportan contexto.",
-			"Si solo hay 1 habilidad sugerida, usa forma singular; si hay 2, menciona ambas de forma natural.",
-			"Prohibido usar las palabras 'encaja' o 'refuerzan el encaje'. Evita frases hechas como 'hará que el salto sea tangible'.",
+			"Genera EXACTAMENTE un arreglo JSON de cadenas (sin texto extra).",
+			"Cada elemento: 2–3 frases. Varía inicio y estilo entre elementos.",
+			"Enfócate en 1–2 habilidades blandas a mejorar (no resaltes las altas) y explica el beneficio (más ofertas, mejor remuneración, crecimiento).",
+			"Incluye un breve resumen del cargo y 1–2 skills técnicas solo si aportan. Prohibido 'encaja/encaje' y tokens ruidosos.",
 			f"Carrera del usuario: {carrera}",
-			f"Asignaturas relevantes del usuario: {self._clean_subjects(asignaturas)}",
+			f"Asignaturas (limpias si aplican): {self._clean_subjects(asignaturas)}",
 			f"Soft skills actuales (1–5): {soft_skills}",
-			"\nOfertas alternativas (con 'suggest_soft'):" 
+			"Para diversidad, estilos sugeridos en orden: analítico, concreto, académico, orientado a impacto, motivador, estratégico.",
+			"Ofertas:",
 		]
 		for i, it in enumerate(items, 1):
+			style = styles[(i - 1) % len(styles)]
 			lines.append(
 				f"{i}) Cargo: {it.get('cargo','')}; Desc: {it.get('descripcion','')}; EURACE: {it.get('eurace_skills','')}; "
-				f"Skills: {it.get('skills','')}; Sugeridas: {it.get('suggest_soft','')}"
+				f"Skills: {it.get('skills','')}; Sugeridas: {it.get('suggest_soft','')}; Estilo: {style}"
 			)
-		lines.append(f"\nDevuelve exactamente {len(items)} líneas, una por oferta, en el formato 'N. mensaje'.")
+		lines.append(f"Devuelve solo el arreglo JSON con {len(items)} elementos.")
 		return "\n".join(lines)
 
 	def _spanish_join(self, parts: List[str]) -> str:
@@ -428,7 +483,7 @@ class AIPersonalizer:
 		for p in parts:
 			p2 = p.strip()
 			# Evitar 'nan' o cadenas muy genéricas
-			if not p2 or p2.lower() == 'nan':
+			if not p2 or self._is_noise_token(p2):
 				continue
 			# Limitar longitud y caracteres extraños
 			p2 = re.sub(r"\s+", " ", p2)
@@ -444,7 +499,7 @@ class AIPersonalizer:
 			clean.append(p2)
 		if not clean:
 			# fallback: separar por espacios y tomar tokens significativos
-			toks = [t for t in re.split(r"\s+", st) if len(t) > 2 and t.lower() != 'nan' and re.search(r"[A-Za-zÁÉÍÓÚáéíóúñ]", t)]
+			toks = [t for t in re.split(r"\s+", st) if len(t) > 2 and not self._is_noise_token(t) and re.search(r"[A-Za-zÁÉÍÓÚáéíóúñ]", t)]
 			clean = toks[:3]
 		return clean[:2]
 
@@ -462,4 +517,35 @@ class AIPersonalizer:
 		if len(cand) >= expected:
 			return cand[:expected]
 		return cand
+
+	def _parse_json_array(self, text: str, expected: int) -> List[str]:
+		try:
+			data = json.loads(text)
+			if isinstance(data, list):
+				vals = [self._clean_text_out(str(x)) for x in data]
+				if len(vals) >= expected:
+					return vals[:expected]
+				return vals
+		except Exception:
+			return []
+
+	def _enforce_diversity(self, lines: List[str], items: List[Dict[str, str]], carrera: str) -> List[str]:
+		seen: set = set()
+		diverse: List[str] = []
+		for idx, line in enumerate(lines):
+			skel = re.sub(r"[^a-z0-9áéíóúñ]+", " ", line.lower()).strip()
+			if skel in seen:
+				# Añadir rasgo distintivo breve usando skills o EURACE
+				tech = self._pick_skills(items[idx].get('skills', ''))
+				if tech:
+					addon = f" Además, el puesto valora {self._spanish_join(tech)}."
+				elif items[idx].get('eurace_skills','').strip():
+					addon = " Además, se alinean competencias EURACE del rol."
+				else:
+					addon = f" Relevante para perfiles de {carrera}."
+				line = self._clean_text_out(line + addon)
+			else:
+				seen.add(skel)
+			diverse.append(line)
+		return diverse
 
