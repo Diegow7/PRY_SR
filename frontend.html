@@ -92,12 +92,12 @@
       .panel .body { padding: 18px 20px; }
 
       label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
-      input[type="text"], select {
+      input[type="text"], select, textarea {
         width: 100%; background: #0b1938; color: var(--text); border: 1px solid rgba(124,197,255,0.18);
         border-radius: 10px; padding: 12px 12px; font-size: 14px; outline: none;
         transition: border-color .2s ease, box-shadow .2s ease;
       }
-      :root[data-theme="light"] input[type="text"], :root[data-theme="light"] select { background: #f7faff; border-color: rgba(10,124,255,0.18); }
+      :root[data-theme="light"] input[type="text"], :root[data-theme="light"] select, :root[data-theme="light"] textarea { background: #ffffff; border-color: rgba(10,124,255,0.18); color: #0f1b36; }
       input[type="text"]:focus, select:focus { border-color: var(--brand-2); box-shadow: 0 0 0 3px rgba(42,160,255,0.15); }
 
       .soft-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
@@ -197,21 +197,21 @@
           <div class="head"><h2 id="form-title">Tu Perfil</h2></div>
           <div class="body">
             <form id="recom-form">
-              <p class="help" id="intro-copy">Este recomendador laboral te conecta con oportunidades en Ecuador y en modalidad remota. Ayúdanos a conocerte mejor respondiendo este breve cuestionario.</p>
-              <p class="help" id="career-help"><strong>Pregunta:</strong> ¿Cuál es la carrera que estudiaste en la EPN?</p>
+              <p class="help" id="intro-copy">Queremos vincularte con ofertas en Ecuador y en modalidad remota. Cuéntanos sobre tu perfil para personalizar tus oportunidades.</p>
+              <p class="help" id="career-help">¿Cuál es la carrera que estudiaste en la EPN?</p>
               <div style="margin-bottom:12px;">
-                <label for="career">Carrera académica</label>
-                <select id="career" name="career" required>
+                <select id="career" name="career" required aria-label="Carrera estudiada">
                   <option value="">Cargando...</option>
                 </select>
               </div>
               <div style="margin-bottom:12px;">
                 <label for="subjects">¿Cuáles son las habilidades técnicas de las que estás más orgulloso? Escribe una lista.</label>
-                <textarea id="subjects" name="subjects" rows="4" placeholder="Ejemplos:\n- Desarrollo de proyectos\n- Matemáticas aplicadas\n- Programación en Python\n- Análisis de datos" style="width:100%; background:#0b1938; color:var(--text); border:1px solid rgba(124,197,255,0.18); border-radius:10px; padding:12px; font-size:14px;" autocomplete="on"></textarea>
+                <textarea id="subjects" name="subjects" rows="4" autocomplete="on"></textarea>
+                <p class="micro">Escribe cada habilidad en una línea. Se añadirán viñetas automáticamente.</p>
               </div>
               <div>
-                <label>También queremos conocer tu confianza en estas habilidades (1–5)</label>
-                <p class="help">Las habilidades blandas son clave para los empleadores y complementan tus capacidades técnicas. Indica tu nivel de confianza: 1 muy baja, 5 muy alta.</p>
+                <label>Califica tu confianza (1–5) en estas habilidades</label>
+                <p class="help">Las habilidades blandas influyen en tu empleabilidad: muestran cómo trabajas con otros y ejecutas tus ideas. Evalúa tu confianza: 1 muy baja, 5 muy alta.</p>
                 <div class="soft-grid" id="soft-skills"></div>
               </div>
               <div class="actions">
@@ -372,6 +372,52 @@
             badge.textContent = 'Sin datos';
           }
         }).catch(() => { badge.textContent = 'Cargando…'; });
+
+      // Setup bulleted textarea behavior and placeholder with saltos de línea reales
+      (function setupBulletedTextarea(){
+        const ta = document.getElementById('subjects');
+        if (!ta) return;
+        const bullet = '- ';
+        // Placeholder con líneas reales
+        const ph = [
+          'Escribe cada habilidad en una línea. Ejemplos:',
+          '- Desarrollo de proyectos',
+          '- Matemáticas aplicadas',
+          '- Programación en Python',
+          '- Análisis de datos'
+        ].join('\n');
+        ta.setAttribute('placeholder', ph);
+        function moveCursorToEnd(el){
+          const pos = el.value.length; el.setSelectionRange(pos, pos);
+        }
+        ta.addEventListener('focus', () => {
+          if (!ta.value.trim()) { ta.value = bullet; moveCursorToEnd(ta); }
+        });
+        ta.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            const start = ta.selectionStart, end = ta.selectionEnd;
+            const before = ta.value.slice(0, start);
+            const after = ta.value.slice(end);
+            const insertion = '\n' + bullet;
+            ta.value = before + insertion + after;
+            const newPos = start + insertion.length;
+            ta.setSelectionRange(newPos, newPos);
+          }
+        });
+        ta.addEventListener('input', () => {
+          const lines = ta.value.split('\n').map(l => {
+            const trimmed = l.trimStart();
+            if (trimmed === '') return '';
+            // Normaliza cualquier viñeta a '- '
+            if (!/^[-•]\s/.test(trimmed)) {
+              return bullet + trimmed.replace(/^[-•]\s*/, '');
+            }
+            return trimmed;
+          });
+          ta.value = lines.join('\n');
+        });
+      })();
 
       function sanitizeAdvice(txt) {
         if (!txt) return '';
