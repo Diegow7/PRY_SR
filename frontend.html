@@ -269,6 +269,51 @@
 
       const badge = document.getElementById('career-badge');
 
+      // Mapeo de etiquetas para mostrar las carreras con el formato deseado
+      // Claves: nombres de carrera tal como vienen del backend (get_available_careers)
+      // Valores: cómo deben visualizarse en la interfaz
+      const CAREER_LABELS = {
+        'Licenciatura Administracion De Empresas': 'ADMINISTRACIÓN DE EMPRESAS',
+        'Ingenieria Agroindustria': 'AGROINDUSTRIA',
+        'Ciencias De Datos E Inteligencia Artificial': 'CIENCIA DE DATOS E INTELIGENCIA ARTIFICIAL',
+        'Ingenieria En Ciencias De La Computacion': 'COMPUTACIÓN',
+        'Economia': 'ECONOMÍA',
+        'Ingenieria En Electricidad': 'ELECTRICIDAD',
+        'Ingenieria En Electronica Y Automatizacion': 'ELECTRÓNICA Y AUTOMATIZACIÓN',
+        'Fisica': 'FÍSICA',
+        'Ingenieria En Geologia': 'GEOLOGÍA',
+        'Ingenieria Ambiental': 'INGENIERÍA AMBIENTAL',
+        'Ingenieria Civil': 'INGENIERÍA CIVIL',
+        'Ingenieria De La Produccion': 'INGENIERÍA DE LA PRODUCCIÓN',
+        'Ingenieria Quimica': 'INGENIERÍA QUÍMICA',
+        'Matematica': 'MATEMÁTICA',
+        'Matematica Aplicada': 'MATEMÁTICA APLICADA',
+        'Ingenieria En Materiales': 'MATERIALES',
+        'Ingenieria En Mecanica': 'MECÁNICA',
+        'Ingenieria En Mecatronica': 'MECATRÓNICA',
+        'Ingenieria En Petroleos': 'PETRÓLEOS',
+        'Ingenieria En Sistemas De Informacion': 'SISTEMAS DE INFORMACIÓN',
+        'Ingenieria En Software': 'SOFTWARE',
+        // Nuevas/variantes
+        'Ingenieria En Tecnologías De La Información': 'TECNOLOGÍAS DE LA INFORMACIÓN',
+        'Ingenieria En Telecomunicaciones': 'TELECOMUNICACIONES',
+        // En caso de que llegue esta variante desde el backend, también la cubrimos
+        'Ingenieria En Telecomunicacion De La Informacion': 'TECNOLOGÍAS DE LA INFORMACIÓN'
+      };
+
+      function formatCareerLabel(raw) {
+        if (!raw) return '';
+        // Usa el mapeo exacto cuando existe
+        if (Object.prototype.hasOwnProperty.call(CAREER_LABELS, raw)) {
+          return CAREER_LABELS[raw];
+        }
+        // Fallback: normaliza espacios/guiones bajos y aplica Title Case simple
+        return String(raw)
+          .replace(/_/g, ' ')
+          .toLowerCase()
+          .replace(/\b\w/g, ch => ch.toUpperCase());
+      }
+
       // Render soft skills sliders
       const softSkillsDiv = document.getElementById('soft-skills');
       softSkillsLabels.forEach((label, i) => {
@@ -300,7 +345,7 @@
           if (data.success && data.data && data.data.careers) {
             data.data.careers.forEach(c => {
               const opt = document.createElement('option');
-              opt.value = c; opt.textContent = c; select.appendChild(opt);
+              opt.value = c; opt.textContent = formatCareerLabel(c); select.appendChild(opt);
             });
             badge.textContent = `Conectando perfiles con oportunidades`;
           } else {

@@ -231,7 +231,8 @@ class CarreraMapper:
         '(RRA20) DESARROLLO DE SOFTWARE': 'Ingenieria En Software',
         '(RRA20) SOFTWARE': 'Ingenieria En Software',
         '(RRA20) TELECOMUNICACIONES': 'Ingenieria En Telecomunicaciones',
-        '(RRA20) INGENIERÍA CIVIL': 'Ingenieria Civil'
+        '(RRA20) INGENIERÍA CIVIL': 'Ingenieria Civil',
+        '(RRA20) TECNOLOGÍAS DE LA INFORMACIÓN': 'Ingenieria En Telecomunicacion De La Informacion'
     }
     
     # Mapping from academic career to job offers CSV
@@ -263,6 +264,7 @@ class CarreraMapper:
             'todas_las_plataformas/Ciencia_de_Datos/Ciencia_de_Datos_Merged.csv'
         ],
         'Ingenieria En Sistemas De Informacion': 'todas_las_plataformas/Sistemas_de_Información/Sistemas_de_Información_Merged.csv',
+        'Ingenieria En Tecnologías De La Información': 'todas_las_plataformas/Tecnologías_de_la_Información/Tecnologías_de_la_Información_Merged.csv',
     }
     
     # Soft skills labels (7 dimensions)
