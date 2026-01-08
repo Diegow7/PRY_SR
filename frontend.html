@@ -119,6 +119,8 @@
       .btn:active { transform: translateY(1px); }
       .btn:disabled { opacity: .65; cursor: not-allowed; }
       .error { color: var(--error); margin-top: 8px; font-size: 13px; }
+      .help { color: var(--muted); font-size: 13px; margin: 6px 0 10px; }
+      .micro { color: var(--muted); font-size: 12px; margin-top: 6px; }
 
       .badge { display: inline-block; padding: 6px 10px; border-radius: 999px; background: rgba(42,160,255,.15); color: var(--brand-2); font-size: 12px; letter-spacing: .3px; }
       .result-section h3 { margin: 0 0 10px; font-size: 18px; color: var(--brand-2); }
@@ -195,6 +197,8 @@
           <div class="head"><h2 id="form-title">Tu Perfil</h2></div>
           <div class="body">
             <form id="recom-form">
+              <p class="help" id="intro-copy">Este recomendador laboral te conecta con oportunidades en Ecuador y en modalidad remota. Ayúdanos a conocerte mejor respondiendo este breve cuestionario.</p>
+              <p class="help" id="career-help"><strong>Pregunta:</strong> ¿Cuál es la carrera que estudiaste en la EPN?</p>
               <div style="margin-bottom:12px;">
                 <label for="career">Carrera académica</label>
                 <select id="career" name="career" required>
@@ -202,11 +206,12 @@
                 </select>
               </div>
               <div style="margin-bottom:12px;">
-                <label for="subjects">Asignaturas relevantes (opcional)</label>
-                <input type="text" id="subjects" name="subjects" placeholder="Ej: Python, Machine Learning, Estadística" autocomplete="on">
+                <label for="subjects">¿Cuáles son las habilidades técnicas de las que estás más orgulloso? Escribe una lista.</label>
+                <textarea id="subjects" name="subjects" rows="4" placeholder="Ejemplos:\n- Desarrollo de proyectos\n- Matemáticas aplicadas\n- Programación en Python\n- Análisis de datos" style="width:100%; background:#0b1938; color:var(--text); border:1px solid rgba(124,197,255,0.18); border-radius:10px; padding:12px; font-size:14px;" autocomplete="on"></textarea>
               </div>
               <div>
-                <label>Autoevaluación de habilidades blandas (1–5)</label>
+                <label>También queremos conocer tu confianza en estas habilidades (1–5)</label>
+                <p class="help">Las habilidades blandas son clave para los empleadores y complementan tus capacidades técnicas. Indica tu nivel de confianza: 1 muy baja, 5 muy alta.</p>
                 <div class="soft-grid" id="soft-skills"></div>
               </div>
               <div class="actions">
@@ -326,6 +331,7 @@
             <div class="value" id="val-${i}">3</div>
           </div>
           <input type="range" min="1" max="5" value="3" step="1" class="slider" id="${id}" aria-label="${label}">
+          <div class="micro" id="fb-${i}" aria-live="polite">Me siento moderadamente confiado en mis habilidades de ${label}.</div>
         `;
         softSkillsDiv.appendChild(wrapper);
       });
@@ -333,7 +339,19 @@
       softSkillsLabels.forEach((_, i) => {
         const input = document.getElementById(`soft-skill-${i}`);
         const out = document.getElementById(`val-${i}`);
-        input.addEventListener('input', () => { out.textContent = input.value; });
+        const fb = document.getElementById(`fb-${i}`);
+        function feedbackText(val, label){
+          const v = parseInt(val, 10);
+          if (v <= 1) return `Me siento muy poco confiado en mis habilidades de ${label}.`;
+          if (v === 2) return `Me siento poco confiado en mis habilidades de ${label}.`;
+          if (v === 3) return `Me siento moderadamente confiado en mis habilidades de ${label}.`;
+          if (v === 4) return `Me siento confiado en mis habilidades de ${label}.`;
+          return `Me siento muy confiado en mis habilidades de ${label}.`;
+        }
+        input.addEventListener('input', () => { 
+          out.textContent = input.value; 
+          if (fb) fb.textContent = feedbackText(input.value, softSkillsLabels[i]);
+        });
       });
 
       // Populate careers (use same-origin to avoid CORS)
@@ -434,7 +452,15 @@
         showLoading('Generando tus recomendaciones…');
 
         const career = document.getElementById('career').value;
-        const subjects = document.getElementById('subjects').value;
+        function normalizeSubjects(text){
+          if (!text) return '';
+          return text
+            .split(/\n|,|;|\//)
+            .map(t => t.replace(/^[-•]\s*/, '').trim())
+            .filter(Boolean)
+            .join(', ');
+        }
+        const subjects = normalizeSubjects(document.getElementById('subjects').value);
         const softSkills = [];
         for (let i = 0; i < 7; i++) {
           const val = parseInt(document.getElementById('soft-skill-' + i).value, 10);
