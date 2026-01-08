@@ -119,8 +119,10 @@
       .btn:active { transform: translateY(1px); }
       .btn:disabled { opacity: .65; cursor: not-allowed; }
       .error { color: var(--error); margin-top: 8px; font-size: 13px; }
-      .help { color: var(--muted); font-size: 13px; margin: 6px 0 10px; }
+      .help { color: var(--muted); font-size: 13px; margin: 6px 0 10px; text-align: justify; line-height: 1.6; }
       .micro { color: var(--muted); font-size: 12px; margin-top: 6px; }
+      .panel .body .help, .panel .body label { max-width: 68ch; }
+      @media (max-width: 640px) { .panel .body .help, .panel .body label { max-width: none; } }
 
       .badge { display: inline-block; padding: 6px 10px; border-radius: 999px; background: rgba(42,160,255,.15); color: var(--brand-2); font-size: 12px; letter-spacing: .3px; }
       .result-section h3 { margin: 0 0 10px; font-size: 18px; color: var(--brand-2); }
@@ -205,13 +207,12 @@
                 </select>
               </div>
               <div style="margin-bottom:12px;">
-                <label for="subjects">¿Cuáles son las habilidades técnicas de las que estás más orgulloso?</label>
-                <p class="micro">Escribe cada habilidad en una línea. Se añadirán viñetas automáticamente.</p>
+                <label for="subjects">¿Cuáles son las habilidades técnicas de las que estás más orgulloso? (Opcional)</label>
+                <p class="micro">Escríbelo en forma de lista, se añadirán viñetas automáticamente.</p>
                 <textarea id="subjects" name="subjects" rows="4" autocomplete="on"></textarea>
               </div>
               <div>
-                <p class="help">Las habilidades blandas son clave para tu empleabilidad, ya que reflejan cómo te comunicas, colaboras y llevas tus ideas a la práctica. Evalúa tu confianza: 1 muy baja, 5 muy alta.</p>
-                <p class="help">No hay respuestas correctas o incorrectas, sé honesto contigo mismo para que podamos ofrecerte recomendaciones más acertadas.</p>
+                <p class="help">Las habilidades blandas son clave para tu empleabilidad, ya que reflejan cómo te comunicas, colaboras y llevas tus ideas a la práctica. Evalúa tu nivel de confianza en cada una del <strong>1 (muy baja) al 5 (muy alta)</strong>, no hay respuestas correctas o incorrectas, sé honesto para recibir recomendaciones más precisas.</p>
                 <div class="soft-grid" id="soft-skills"></div>
               </div>
               <div class="actions">
@@ -378,7 +379,7 @@
         const ta = document.getElementById('subjects');
         if (!ta) return;
         const bullet = '- ';
-        // Placeholder con líneas reales
+        // Placeholder con saltos de línea reales
         const ph = [
           'Escribe cada habilidad en una línea. Ejemplos:',
           '- Desarrollo de proyectos',
@@ -387,35 +388,81 @@
           '- Análisis de datos'
         ].join('\n');
         ta.setAttribute('placeholder', ph);
-        function moveCursorToEnd(el){
-          const pos = el.value.length; el.setSelectionRange(pos, pos);
+
+        function getLineInfo(text, pos){
+          let start = text.lastIndexOf('\n', pos - 1);
+          start = start === -1 ? 0 : start + 1;
+          let end = text.indexOf('\n', pos);
+          if (end === -1) end = text.length;
+          const lineText = text.slice(start, end);
+          return { start, end, lineText, col: pos - start };
         }
+
         ta.addEventListener('focus', () => {
-          if (!ta.value.trim()) { ta.value = bullet; moveCursorToEnd(ta); }
-        });
-        ta.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter') {
-            e.preventDefault();
-            const start = ta.selectionStart, end = ta.selectionEnd;
-            const before = ta.value.slice(0, start);
-            const after = ta.value.slice(end);
-            const insertion = '\n' + bullet;
-            ta.value = before + insertion + after;
-            const newPos = start + insertion.length;
-            ta.setSelectionRange(newPos, newPos);
+          if (!ta.value.trim()) {
+            ta.value = bullet;
+            const p = ta.value.length; ta.setSelectionRange(p, p);
           }
         });
-        ta.addEventListener('input', () => {
-          const lines = ta.value.split('\n').map(l => {
-            const trimmed = l.trimStart();
-            if (trimmed === '') return '';
-            // Normaliza cualquier viñeta a '- '
-            if (!/^[-•]\s/.test(trimmed)) {
-              return bullet + trimmed.replace(/^[-•]\s*/, '');
+
+        ta.addEventListener('keydown', (e) => {
+          const startPos = ta.selectionStart;
+          const endPos = ta.selectionEnd;
+          // Permite edición normal cuando hay selección
+          if (startPos !== endPos) return;
+
+          const info = getLineInfo(ta.value, startPos);
+          const isBulleted = /^[-•]\s/.test(info.lineText);
+          const afterBullet = isBulleted ? info.lineText.slice(2) : info.lineText;
+
+          // Enter: inserta nueva viñeta; Shift+Enter: salto normal
+          if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            const before = ta.value.slice(0, startPos);
+            const after = ta.value.slice(endPos);
+            const insertion = '\n' + bullet;
+            ta.value = before + insertion + after;
+            const newPos = before.length + insertion.length;
+            ta.setSelectionRange(newPos, newPos);
+            return;
+          }
+
+          // Backspace: manejo de viñeta al inicio de línea
+          if (e.key === 'Backspace') {
+            if (isBulleted && info.col <= 2) {
+              e.preventDefault();
+              // Si la línea está vacía (solo viñeta), elimina la línea y va al final de la anterior
+              if (afterBullet.trim() === '' && info.start > 0) {
+                const before = ta.value.slice(0, info.start - 1); // quita '\n' previo
+                const after = ta.value.slice(info.end);
+                ta.value = before + after;
+                const caret = info.start - 1; // fin de la línea anterior
+                ta.setSelectionRange(caret, caret);
+              } else {
+                // Quita solo la viñeta y mantiene la edición libre
+                const before = ta.value.slice(0, info.start);
+                const rest = afterBullet;
+                const after = ta.value.slice(info.end);
+                ta.value = before + rest + after;
+                ta.setSelectionRange(info.start, info.start);
+              }
+              return;
             }
-            return trimmed;
-          });
-          ta.value = lines.join('\n');
+          }
+        });
+
+        // Pegar: convierte cada línea en viñeta
+        ta.addEventListener('paste', (e) => {
+          e.preventDefault();
+          const text = (e.clipboardData || window.clipboardData).getData('text');
+          const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean).map(l => bullet + l);
+          const toInsert = lines.join('\n');
+          const start = ta.selectionStart, end = ta.selectionEnd;
+          const before = ta.value.slice(0, start);
+          const after = ta.value.slice(end);
+          ta.value = before + toInsert + after;
+          const caret = before.length + toInsert.length;
+          ta.setSelectionRange(caret, caret);
         });
       })();
 
