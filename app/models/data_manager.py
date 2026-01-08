@@ -264,7 +264,8 @@ class CarreraMapper:
             'todas_las_plataformas/Ciencia_de_Datos/Ciencia_de_Datos_Merged.csv'
         ],
         'Ingenieria En Sistemas De Informacion': 'todas_las_plataformas/Sistemas_de_Información/Sistemas_de_Información_Merged.csv',
-        'Ingenieria En Tecnologías De La Información': 'todas_las_plataformas/Tecnologías_de_la_Información/Tecnologías_de_la_Información_Merged.csv',
+        # Canonicalizamos a 'Ingenieria En Telecomunicacion De La Informacion' para coincidir con tfidf y encuestas
+        'Ingenieria En Telecomunicacion De La Informacion': 'todas_las_plataformas/Tecnologías_de_la_Información/Tecnologías_de_la_Información_Merged.csv',
     }
     
     # Soft skills labels (7 dimensions)

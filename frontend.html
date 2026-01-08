@@ -343,7 +343,8 @@
           const select = document.getElementById('career');
           select.innerHTML = '<option value="">Selecciona una carrera</option>';
           if (data.success && data.data && data.data.careers) {
-            data.data.careers.forEach(c => {
+            const careers = data.data.careers.filter(c => c !== 'Ingenieria En Ciencias De Datos');
+            careers.forEach(c => {
               const opt = document.createElement('option');
               opt.value = c; opt.textContent = formatCareerLabel(c); select.appendChild(opt);
             });
