@@ -87,7 +87,7 @@
 
       .panel { background: linear-gradient(180deg, #0b1836, #0a1530); border: 1px solid rgba(124,197,255,0.12); border-radius: var(--radius); box-shadow: var(--shadow); }
       :root[data-theme="light"] .panel { background: #ffffff; border: 1px solid rgba(10,124,255,0.12); }
-      .panel .head { padding: 18px 20px; border-bottom: 1px solid rgba(124,197,255,0.12); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+      .panel .head { padding: 18px 20px; border-bottom: 1px solid rgba(124,197,255,0.12); display: flex; align-items: center; justify-content: flex-start; flex-wrap: wrap; gap: 10px; }
       .panel .head h2 { margin: 0; font-size: 16px; font-weight: 600; color: var(--brand-2); letter-spacing: .4px; }
       .panel .body { padding: 18px 20px; }
 
@@ -202,8 +202,8 @@
       <main class="layout">
         <section class="panel" aria-labelledby="form-title">
           <div class="head">
-            <h2 id="form-title">Tu Perfil</h2>
             <button class="btn btn--compact" id="reset-btn" type="button" aria-label="Limpiar datos">Limpiar datos</button>
+            <h2 id="form-title">Tu Perfil</h2>
           </div>
           <div class="body">
             <form id="recom-form">
