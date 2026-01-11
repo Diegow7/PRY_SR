@@ -49,14 +49,24 @@ class AIPersonalizer:
 		self._enabled = False
 		self._model = os.getenv('OPENAI_MODEL', '').strip()
 		api_key = os.getenv('OPENAI_API_KEY', '').strip()
+		org_id = os.getenv('OPENAI_ORG_ID', '').strip()
+		project_id = os.getenv('OPENAI_PROJECT', '').strip()
+		base_url = os.getenv('OPENAI_BASE_URL', '').strip()
 		self._require_llm = os.getenv('AI_PERSONALIZER_REQUIRE_LLM', '').strip().lower() in {'1','true','yes'}
 		self._enabled = bool(api_key and self._model)
 		self._client = None
 		if self._enabled:
 			try:
 				from openai import OpenAI  # type: ignore
-				# Inicializa el cliente usando explícitamente la API key
-				self._client = OpenAI(api_key=api_key)
+				# Inicializa el cliente usando explícitamente la API key y parámetros opcionales
+				kwargs = { 'api_key': api_key }
+				if org_id:
+					kwargs['organization'] = org_id
+				if project_id:
+					kwargs['project'] = project_id
+				if base_url:
+					kwargs['base_url'] = base_url
+				self._client = OpenAI(**kwargs)
 			except Exception:
 				# Si no se puede inicializar, desactivar silenciosamente
 				self._enabled = False
