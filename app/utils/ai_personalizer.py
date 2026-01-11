@@ -257,15 +257,11 @@ class AIPersonalizer:
 				msg = self._chat(prompt)
 				if msg:
 					return self._clean_text_out(msg)
-			except Exception:
-				# Si es obligatorio usar LLM, no hacer fallback silencioso
-				if self._require_llm:
-					return ''
+			except Exception as e:
+				# Log básico para diagnóstico en despliegue
+				print(f"[AIPersonalizer] LLM error in personalize_description: {e}")
 				pass
 		# Fallback determinístico
-		# Si es obligatorio usar LLM y no está disponible, devolvemos vacío
-		if self._require_llm and not self.is_enabled():
-			return ''
 		return self._semantic_fallback(
 			cargo, descripcion, eurace_skills, skills, carrera, asignaturas
 		)
@@ -313,14 +309,10 @@ class AIPersonalizer:
 					# Forzar diversidad básica si hay duplicados evidentes
 					final = self._enforce_diversity(final, items, carrera)
 					return final[:len(items)]
-			except Exception:
-				# Si es obligatorio usar LLM, devolver lista vacía para que el caller lo detecte
-				if self._require_llm:
-					return ["" for _ in items]
+			except Exception as e:
+				print(f"[AIPersonalizer] LLM error in personalize_batch: {e}")
 				pass
 		# Fallback determinístico
-		if self._require_llm and not self.is_enabled():
-			return ["" for _ in items]
 		explicaciones: List[str] = []
 		for it in items:
 			explicaciones.append(
@@ -354,13 +346,10 @@ class AIPersonalizer:
 				if parsed:
 					cleaned = [self._clean_text_out(p) for p in parsed]
 					return self._enforce_diversity(cleaned, items, carrera)[:len(items)]
-			except Exception:
-				if self._require_llm:
-					return ["" for _ in items]
+			except Exception as e:
+				print(f"[AIPersonalizer] LLM error in personalize_alt_batch: {e}")
 				pass
 		explicaciones: List[str] = []
-		if self._require_llm and not self.is_enabled():
-			return ["" for _ in items]
 		for it in items:
 			sugeridas = it.get('suggest_soft', '').strip()
 			base = self._simple_explanation(
