@@ -15,7 +15,7 @@ try:
 	from dotenv import load_dotenv  # type: ignore
 	from pathlib import Path
 	# Cargar .env desde la raíz del proyecto explícitamente
-	root_env = Path(__file__).resolve().parents[2] / '.env'
+	root_env = Path(__file__).resolve().parents[3] / '.env'
 	load_dotenv(dotenv_path=str(root_env))
 except Exception:
 	# Fallback a búsqueda por defecto

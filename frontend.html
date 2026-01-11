@@ -598,7 +598,7 @@
         try {
           const res = await fetch('/api/recommendations/predict', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
           const data = await res.json();
-          if (!data.success) { err.textContent = data.message || 'Error en la recomendación.'; btn.disabled = false; btn.textContent = 'Obtener recomendaciones'; return; }
+          if (!data.success) { err.textContent = data.message || 'Error en la recomendación.'; btn.disabled = false; btn.textContent = 'Obtener recomendaciones'; hideLoading(); return; }
           const recs = data.data.recomendaciones;
           if (!recs || recs.length === 0) { resultEl.innerHTML = '<p>Sin recomendaciones.</p>'; btn.disabled = false; btn.textContent = 'Obtener recomendaciones'; hideLoading(); return; }
           renderMain(data.data.carrera, recs);
