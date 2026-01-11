@@ -52,6 +52,13 @@ class AIPersonalizer:
 		org_id = os.getenv('OPENAI_ORG_ID', '').strip()
 		project_id = os.getenv('OPENAI_PROJECT', '').strip()
 		base_url = os.getenv('OPENAI_BASE_URL', '').strip()
+		# Proxy soporte (si se define en entorno). NO pasar 'proxies' directo al cliente.
+		proxy_env = (
+			os.getenv('OPENAI_PROXY')
+			or os.getenv('HTTPS_PROXY')
+			or os.getenv('HTTP_PROXY')
+			or ''
+		).strip()
 		self._require_llm = os.getenv('AI_PERSONALIZER_REQUIRE_LLM', '').strip().lower() in {'1','true','yes'}
 		self._enabled = bool(api_key and self._model)
 		self._client = None
@@ -59,6 +66,7 @@ class AIPersonalizer:
 		if self._enabled:
 			try:
 				from openai import OpenAI  # type: ignore
+				import httpx  # type: ignore
 				# Inicializa el cliente usando explícitamente la API key y parámetros opcionales
 				kwargs = { 'api_key': api_key }
 				if org_id:
@@ -67,6 +75,13 @@ class AIPersonalizer:
 					kwargs['project'] = project_id
 				if base_url:
 					kwargs['base_url'] = base_url
+				# Si hay proxy, construir http_client de httpx con proxies correctos
+				if proxy_env:
+					try:
+						http_client = httpx.Client(proxies=proxy_env, timeout=30.0)
+						kwargs['http_client'] = http_client
+					except Exception as e_proxy:
+						self._init_error = f"proxy_setup_failed: {e_proxy.__class__.__name__}: {e_proxy}"
 				self._client = OpenAI(**kwargs)
 			except Exception as e:
 				# Si no se puede inicializar, desactivar silenciosamente
