@@ -145,6 +145,26 @@
       a.link { color: var(--brand-2); text-decoration: none; border-bottom: 1px dotted rgba(124,197,255,.5); }
       a.link:hover { color: white; border-bottom-color: white; }
       :root[data-theme="light"] a.link:hover { color: #0a7cff; border-bottom-color: #0a7cff; }
+        /* Robust wrapping for extreme text cases */
+        .card .title, .card .desc, .kv { overflow-wrap: anywhere; word-wrap: break-word; }
+        a.link { overflow-wrap: anywhere; }
+      @media (max-width: 640px) { 
+        .panel .body { padding: 14px 16px; }
+        .panel .body .help, .panel .body label { max-width: none; }
+        .card { padding: 12px; }
+        .result-section h3 { font-size: 16px; }
+      }
+
+      /* Tablet refinements */
+      @media (max-width: 980px) {
+        .panel .head h2 { font-size: 15px; }
+        .btn { font-size: 14px; }
+      }
+
+      /* Wide screens: two-column cards for readability */
+      @media (min-width: 1280px) {
+        .cards { grid-template-columns: 1fr 1fr; }
+      }
 
       .skeleton { background: linear-gradient(90deg, rgba(255,255,255,0.05), rgba(255,255,255,0.12), rgba(255,255,255,0.05)); background-size: 200% 100%; animation: shimmer 1.2s infinite; border-radius: 8px; }
       @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
@@ -182,6 +202,9 @@
       }
       @keyframes spin { to { transform: rotate(360deg); } }
       .loading-text { font-size: 14px; color: var(--muted); text-align: center; }
+          @media (max-width: 360px) {
+            .loading-panel { min-width: 0; width: 90%; }
+          }
     </style>
   </head>
   <body>
@@ -508,7 +531,8 @@
 
       const resultEl = document.getElementById('result');
       function renderMain(carrera, recs) {
-        let html = `<div class="result-section"><h3>Recomendaciones para ${carrera}</h3><div class="cards">`;
+        const carreraLabel = formatCareerLabel(carrera);
+        let html = `<div class="result-section"><h3>Recomendaciones para ${carreraLabel}</h3><div class="cards">`;
         recs.forEach(rec => { html += card(rec); });
         html += `</div></div>`;
         resultEl.innerHTML = html;
