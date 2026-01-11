@@ -207,8 +207,8 @@
                 </select>
               </div>
               <div style="margin-bottom:12px;">
-                <label for="subjects">¿Cuáles son las habilidades técnicas de las que estás más orgulloso? (Opcional)</label>
-                <p class="micro">Escríbelo en forma de lista, se añadirán viñetas automáticamente.</p>
+                <label for="subjects">¿Cuáles son las habilidades técnicas que mejor representan tu formación profesional? (Opcional)</label>
+                <p class="micro">Escríbelo en forma de lista.</p>
                 <textarea id="subjects" name="subjects" rows="4" autocomplete="on"></textarea>
               </div>
               <div>
@@ -381,11 +381,11 @@
         const bullet = '- ';
         // Placeholder con saltos de línea reales
         const ph = [
-          'Escribe cada habilidad en una línea. Ejemplos:',
-          '- Desarrollo de proyectos',
-          '- Matemáticas aplicadas',
-          '- Programación en Python',
-          '- Análisis de datos'
+          'Escribe cada habilidad en una línea. Ejemplo:',
+          '- Desarrollo y optimización de procesos',
+          '- Programación y automatización básica',
+          '- Modelado y simulación',
+          '- Diseño y documentación de proyectos'
         ].join('\n');
         ta.setAttribute('placeholder', ph);
 
@@ -479,12 +479,15 @@
         const similitud = rec.cosine_similarity ?? rec.similitud;
         const link = (rec.url || '').trim();
         const rank = rec.rank ?? indexPrefix;
+        const afinidad = (typeof similitud === 'number')
+          ? Math.max(0, Math.min(1, Number(similitud))) * 100
+          : null;
         return `
           <div class="card">
             <div class="title">${rank}. ${rec.cargo}</div>
             <div class="desc">${explicacion}</div>
             ${link ? `<div class="kv"><b>Link:</b> <a class="link" href="${link}" target="_blank" rel="noopener noreferrer">Ver oferta</a></div>` : ''}
-            <div class="kv"><b>Parámetros:</b> Ángulo coseno: ${angulo ? Number(angulo).toFixed(2) : 'N/A'}°, Similitud coseno: ${typeof similitud === 'number' ? Number(similitud).toFixed(4) : 'N/A'}</div>
+            <div class="kv"><b>Porcentaje de afinidad:</b> ${afinidad !== null ? afinidad.toFixed(2) + '%' : 'N/A'}</div>
           </div>
         `;
       }
