@@ -78,7 +78,8 @@ class AIPersonalizer:
 				# Si hay proxy, construir http_client de httpx con proxies correctos
 				if proxy_env:
 					try:
-						http_client = httpx.Client(proxies=proxy_env, timeout=30.0)
+						# httpx>=0.27 usa 'proxy' (singular) en lugar de 'proxies'
+						http_client = httpx.Client(proxy=proxy_env, timeout=30.0)
 						kwargs['http_client'] = http_client
 					except Exception as e_proxy:
 						self._init_error = f"proxy_setup_failed: {e_proxy.__class__.__name__}: {e_proxy}"
@@ -154,6 +155,12 @@ class AIPersonalizer:
 		t = (text or "").strip()
 		if not t:
 			return ""
+		# remover cercas de código y etiquetas de formato comunes
+		t = re.sub(r"^```(?:json|JSON)?\s*", "", t)
+		t = t.replace("```", "")
+		# eliminar corchetes sueltos en extremos causados por respuestas en bloque
+		t = re.sub(r"^\[+\s*", "", t)
+		t = re.sub(r"\s*\]+$", "", t)
 		# eliminar tokens tipo 'nan', 'n/a', 'null', 'none' con puntuación o puntos de arrastre
 		t = re.sub(r"(?i)\b(?:nan|n/?a|null|none)\b(?:\s*[\.…,;:\-]*)?", "", t)
 		# colapsar puntuación repetida
@@ -645,6 +652,9 @@ class AIPersonalizer:
 		# Filtrar encabezados o texto extra
 		cand: List[str] = []
 		for l in lines:
+			# Ignorar cercas de código, corchetes sueltos o etiquetas
+			if l in {"[", "]"} or l.startswith("```") or l.lower() in {"json", "arreglo", "array"}:
+				continue
 			m = re.match(r"^(?:\d+\.|- )\s*(.+)$", l)
 			cand.append(m.group(1).strip() if m else l)
 		# Recortar a expected
@@ -653,8 +663,29 @@ class AIPersonalizer:
 		return cand
 
 	def _parse_json_array(self, text: str, expected: int) -> List[str]:
+		# Intentar extraer un arreglo JSON aunque vengan cercas de código o texto extra
+		def _extract_json_slice(s: str) -> Optional[str]:
+			if not s:
+				return None
+			# remover cercas de código en bloque
+			s_clean = re.sub(r"^```(?:json|JSON)?\s*", "", s.strip())
+			s_clean = s_clean.replace("```", "").strip()
+			# si es JSON válido tal cual
+			try:
+				json.loads(s_clean)
+				return s_clean
+			except Exception:
+				pass
+			# buscar el primer segmento que aparenta ser un arreglo JSON
+			m = re.search(r"\[[\s\S]*\]", s_clean)
+			if m:
+				return m.group(0)
+			return None
 		try:
-			data = json.loads(text)
+			jtxt = _extract_json_slice(text)
+			if not jtxt:
+				return []
+			data = json.loads(jtxt)
 			if isinstance(data, list):
 				vals = [self._clean_text_out(str(x)) for x in data]
 				if len(vals) >= expected:
