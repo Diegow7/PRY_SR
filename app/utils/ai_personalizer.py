@@ -55,6 +55,7 @@ class AIPersonalizer:
 		self._require_llm = os.getenv('AI_PERSONALIZER_REQUIRE_LLM', '').strip().lower() in {'1','true','yes'}
 		self._enabled = bool(api_key and self._model)
 		self._client = None
+		self._init_error = ''
 		if self._enabled:
 			try:
 				from openai import OpenAI  # type: ignore
@@ -67,15 +68,17 @@ class AIPersonalizer:
 				if base_url:
 					kwargs['base_url'] = base_url
 				self._client = OpenAI(**kwargs)
-			except Exception:
+			except Exception as e:
 				# Si no se puede inicializar, desactivar silenciosamente
 				self._enabled = False
+				self._init_error = f"init_failed: {e.__class__.__name__}: {e}"
 		# Información de diagnóstico mínima para saber por qué no se usa LLM
 		self._diag = {
 			'enabled': self._enabled,
 			'model': self._model,
 			'require_llm': self._require_llm,
-			'client_ready': self._client is not None
+			'client_ready': self._client is not None,
+			'init_error': self._init_error
 		}
 		# Silenciar advertencias en consola; usar fallback determinístico si el LLM no está disponible
 

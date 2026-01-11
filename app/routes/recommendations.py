@@ -89,6 +89,14 @@ def get_recommendations():
         # AI personalizer
         ai = AIPersonalizer()
         llm_used = ai.is_enabled()
+        require_llm = bool(os.getenv('AI_PERSONALIZER_REQUIRE_LLM','').strip().lower() in {'1','true','yes'})
+        # Si se requiere LLM y no está disponible, evitar las plantillas y avisar
+        if require_llm and not llm_used:
+            return error_response(
+                "El personalizador con OpenAI está deshabilitado o no pudo inicializarse en este entorno. Revisa OPENAI_API_KEY/OPENAI_MODEL y conectividad.",
+                status_code=503,
+                details=ai.status_details()
+            )
 
         # Enrich recommendations using a single AI call (batch) for speed
         recomendaciones = []
