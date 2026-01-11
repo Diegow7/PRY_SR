@@ -87,7 +87,7 @@
 
       .panel { background: linear-gradient(180deg, #0b1836, #0a1530); border: 1px solid rgba(124,197,255,0.12); border-radius: var(--radius); box-shadow: var(--shadow); }
       :root[data-theme="light"] .panel { background: #ffffff; border: 1px solid rgba(10,124,255,0.12); }
-      .panel .head { padding: 18px 20px; border-bottom: 1px solid rgba(124,197,255,0.12); display: flex; align-items: center; justify-content: space-between; }
+      .panel .head { padding: 18px 20px; border-bottom: 1px solid rgba(124,197,255,0.12); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
       .panel .head h2 { margin: 0; font-size: 16px; font-weight: 600; color: var(--brand-2); letter-spacing: .4px; }
       .panel .body { padding: 18px 20px; }
 
@@ -124,6 +124,10 @@
       .micro { color: var(--muted); font-size: 12px; margin-top: 6px; }
       .panel .body .help, .panel .body label { max-width: 68ch; }
       @media (max-width: 640px) { .panel .body .help, .panel .body label { max-width: none; } }
+      @media (max-width: 640px) {
+        .panel .head { flex-direction: column; align-items: stretch; }
+        .btn--compact { width: 100%; text-align: center; }
+      }
 
       .badge { display: inline-block; padding: 6px 10px; border-radius: 999px; background: rgba(42,160,255,.15); color: var(--brand-2); font-size: 12px; letter-spacing: .3px; }
       .result-section h3 { margin: 0 0 10px; font-size: 18px; color: var(--brand-2); }
