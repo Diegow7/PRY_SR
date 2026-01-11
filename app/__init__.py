@@ -3,6 +3,7 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 import os
 from dotenv import load_dotenv
+from pathlib import Path
 
 from config import config_by_name
 from app.routes import recommendations_bp
@@ -25,8 +26,13 @@ def create_app(config_name=None):
     
     config = config_by_name.get(config_name, config_by_name['development'])
     
-    # Load environment variables from .env
-    load_dotenv()
+    # Load environment variables from explicit .env path (project root)
+    try:
+        env_path = Path(__file__).resolve().parents[1] / '.env'
+        load_dotenv(dotenv_path=str(env_path))
+    except Exception:
+        # Fallback to default search
+        load_dotenv()
 
     # Create Flask app
     app = Flask(__name__)
