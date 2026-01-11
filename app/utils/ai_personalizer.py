@@ -56,6 +56,10 @@ class AIPersonalizer:
 		if self._require_llm and not self._enabled:
 			print('[AIPersonalizer] Advertencia: AI_PERSONALIZER_REQUIRE_LLM está activo, pero OPENAI_API_KEY/OPENAI_MODEL no están configurados o el cliente no pudo inicializarse.')
 
+	def is_enabled(self) -> bool:
+		"""Indica si el cliente de OpenAI está habilitado y listo."""
+		return bool(self._enabled and self._client is not None)
+
 	def _clean_subjects(self, asignaturas: str) -> str:
 		"""Sanear asignaturas para evitar basura (ej. 'asdadsad'). Devuelve frase breve o ''"""
 		s = (asignaturas or '').strip()
@@ -412,7 +416,7 @@ class AIPersonalizer:
 		resp = self._client.chat.completions.create(
 			model=self._model,
 			messages=[
-				{"role": "system", "content": "Eres un asistente que redacta en español, muy conciso (2–3 frases) y específico. Usa un tono profesional y claro."},
+				{"role": "system", "content": "Redacta en español, claro, directo y profesional. Entrega un único párrafo de 3–4 frases. Evita plantillas y frases hechas; PROHIBIDO usar expresiones como 'La base de ... sustenta', 'guarda relación directa', 'destaca como opción sólida', 'Asignaturas relevantes:'. Integra las asignaturas y EUR-ACE de forma natural si aportan. No uses la palabra 'encaja'. Varía el inicio y estructura. No incluyas tokens ruidosos como 'nan'."},
 				{"role": "user", "content": prompt}
 			],
 			temperature=float(temperature),
@@ -433,16 +437,16 @@ class AIPersonalizer:
 		soft_skills: List[int]
 	) -> str:
 		return (
-			"Escribe un texto breve (3–4 frases) para una tarjeta de trabajo. "
-			"Requisitos: (1) resume el rol; (2) vincúlalo con la carrera del usuario usando asignaturas válidas y EURACE si aportan; (3) menciona 1–2 skills técnicas si son relevantes. "
-			"Evita palabras como 'encaja' y cualquier token ruidoso (p. ej., 'nan'). Varía estructuras de frase y evita plantillas genéricas.\n\n"
+			"Redacta un único párrafo de 3–4 frases para una tarjeta de trabajo, en tono profesional, claro y personalizado. "
+			"Incluye: (1) un resumen conciso del rol; (2) una afirmación breve de afinidad razonada con la carrera del usuario (puedes usar variantes como 'presenta un buen nivel de afinidad' o similar, sin repetir exactamente entre ofertas), mencionando asignaturas válidas si aportan; (3) referencia a EUR-ACE solo si agrega valor; (4) 1–2 skills técnicas de la oferta únicamente si ayudan al contexto. "
+			"PROHIBIDO: 'encaja/encaje', 'La base de ... sustenta', 'guarda relación directa', 'destaca como opción sólida', encabezados como 'Asignaturas relevantes:', y cualquier token ruidoso (p. ej., 'nan'). Varía el inicio y la estructura.\n\n"
 			f"Cargo: {cargo}\n"
 			f"Descripción (puede contener ruido): {descripcion}\n"
-			f"EURACE_skills: {eurace_skills}\n"
-			f"Skills técnicas: {skills}\n"
+			f"EURACE (si aplica): {eurace_skills}\n"
+			f"Skills técnicas de la oferta: {skills}\n"
 			f"Carrera del usuario: {carrera}\n"
 			f"Asignaturas del usuario (limpias si aplican): {self._clean_subjects(asignaturas)}\n"
-			f"Autoevaluación soft skills (1–5): {soft_skills}\n"
+			f"Soft skills (1–5): {soft_skills}\n"
 		)
 
 	def _build_batch_prompt(
@@ -466,12 +470,11 @@ class AIPersonalizer:
 			"Varía el inicio y la estructura entre elementos; evita frases hechas o plantillas repetidas.",
 			"REGLAS ESTRICTAS DE DIVERSIDAD:",
 			"- Cada texto debe ser semánticamente distinto; no solo cambiar palabras.",
-			"- Está PROHIBIDO reutilizar estructuras como:",
-			"  'Asignaturas relevantes', 'Se sustentan en', 'destaca como opción sólida'.",
+			"- Está PROHIBIDO reutilizar estructuras como: 'Asignaturas relevantes:', 'Se sustentan en', 'La base de ... sustenta', 'guarda relación directa', 'destaca como opción sólida'.",
 			"- No repitas argumentos entre ofertas, aunque pertenezcan a la misma carrera.",
 			"- Cada texto debe enfatizar UN enfoque distinto: operativo, académico, técnico, estratégico, o de proyección profesional.",
-			"Incluye: (1) resumen del rol; (2) vínculo con la carrera del usuario usando asignaturas válidas y/o EURACE; (3) 1–2 skills técnicas SOLO si aportan contexto real.",
-			"Prohibido usar 'encaja/encaje'. No incluyas 'nan' ni cadenas sin sentido.",
+			"Incluye: (1) resumen del rol; (2) vínculo con la carrera del usuario con una afirmación breve de afinidad razonada usando asignaturas válidas y/o EUR-ACE; (3) 1–2 skills técnicas SOLO si aportan contexto real.",
+			"Prohibido usar 'encaja/encaje'. No incluyas 'nan' ni cadenas sin sentido ni encabezados tipo 'Link:'.",
 			f"Carrera del usuario: {carrera}",
 			f"Asignaturas (limpias si aplican): {self._clean_subjects(asignaturas)}",
 			f"Soft skills (1–5): {soft_skills}",

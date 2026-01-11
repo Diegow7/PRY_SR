@@ -66,6 +66,24 @@ copy .env.example .env
 
 # O en Linux/Mac
 cp .env.example .env
+### 2.3 Activar textos personalizados con OpenAI (opcional)
+
+Para que las descripciones de cada oferta sean generadas por la API de OpenAI (más naturales y personalizadas), configura estas variables en tu `.env`:
+
+```
+OPENAI_API_KEY=tu_api_key
+OPENAI_MODEL=gpt-4o-mini
+# Opcional: exige que el LLM esté activo; si no lo está, la API avisará en lugar de usar el texto determinístico
+AI_PERSONALIZER_REQUIRE_LLM=false
+```
+
+Puedes verificar que el LLM está activo consultando:
+
+```bash
+curl http://localhost:5000/api/recommendations/info
+```
+
+El campo `llm_enabled` debe aparecer como `true` para confirmar que la personalización AI está operativa.
 ```
 
 ## Paso 3: Ejecutar el Servidor

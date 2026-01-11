@@ -1,5 +1,6 @@
 """Recommendations API routes"""
 from flask import Blueprint, request, jsonify
+import os
 import numpy as np
 import traceback
 
@@ -358,6 +359,11 @@ def get_api_info():
     }
     """
     try:
+        # LLM status
+        try:
+            ai_status = AIPersonalizer().is_enabled()
+        except Exception:
+            ai_status = False
         info = {
             'version': '1.0.0',
             'name': 'Sistema de Recomendación de Ofertas Laborales',
@@ -372,7 +378,9 @@ def get_api_info():
             'technical_skills_dimensions': 69,
             'soft_skills_dimensions': 7,
             'total_dimensions': 76,
-            'available_careers_count': len(CarreraMapper.get_available_careers())
+            'available_careers_count': len(CarreraMapper.get_available_careers()),
+            'llm_enabled': ai_status,
+            'openai_model': os.getenv('OPENAI_MODEL', '')
         }
         
         return success_response(data=info, message="API info retrieved successfully")
