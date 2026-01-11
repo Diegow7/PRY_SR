@@ -88,6 +88,7 @@ def get_recommendations():
 
         # AI personalizer
         ai = AIPersonalizer()
+        llm_used = ai.is_enabled()
 
         # Enrich recommendations using a single AI call (batch) for speed
         recomendaciones = []
@@ -234,6 +235,7 @@ def get_recommendations():
             'mejora_soft_skills_mensaje': consejo_mejora,
             'recomendaciones_mejorando_soft_skills': alt_recomendaciones,
             'include_alt': include_alt,
+            'llm_used': llm_used
         }
 
         return success_response(
@@ -361,9 +363,12 @@ def get_api_info():
     try:
         # LLM status
         try:
-            ai_status = AIPersonalizer().is_enabled()
+            ai = AIPersonalizer()
+            ai_status = ai.is_enabled()
+            ai_diag = ai.status_details()
         except Exception:
             ai_status = False
+            ai_diag = {'enabled': False}
         info = {
             'version': '1.0.0',
             'name': 'Sistema de Recomendación de Ofertas Laborales',
@@ -380,7 +385,9 @@ def get_api_info():
             'total_dimensions': 76,
             'available_careers_count': len(CarreraMapper.get_available_careers()),
             'llm_enabled': ai_status,
-            'openai_model': os.getenv('OPENAI_MODEL', '')
+            'llm_required': bool(os.getenv('AI_PERSONALIZER_REQUIRE_LLM','').strip().lower() in {'1','true','yes'}),
+            'openai_model': os.getenv('OPENAI_MODEL', ''),
+            'llm_status_details': ai_diag
         }
         
         return success_response(data=info, message="API info retrieved successfully")

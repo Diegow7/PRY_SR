@@ -70,11 +70,22 @@ class AIPersonalizer:
 			except Exception:
 				# Si no se puede inicializar, desactivar silenciosamente
 				self._enabled = False
+		# Información de diagnóstico mínima para saber por qué no se usa LLM
+		self._diag = {
+			'enabled': self._enabled,
+			'model': self._model,
+			'require_llm': self._require_llm,
+			'client_ready': self._client is not None
+		}
 		# Silenciar advertencias en consola; usar fallback determinístico si el LLM no está disponible
 
 	def is_enabled(self) -> bool:
 		"""Indica si el cliente de OpenAI está habilitado y listo."""
 		return bool(self._enabled and self._client is not None)
+
+	def status_details(self) -> Dict[str, bool | str]:
+		"""Devuelve diagnóstico simple del estado del LLM."""
+		return dict(self._diag)
 
 	def _clean_subjects(self, asignaturas: str) -> str:
 		"""Sanear asignaturas para evitar basura (ej. 'asdadsad'). Devuelve frase breve o ''"""
@@ -247,8 +258,14 @@ class AIPersonalizer:
 				if msg:
 					return self._clean_text_out(msg)
 			except Exception:
+				# Si es obligatorio usar LLM, no hacer fallback silencioso
+				if self._require_llm:
+					return ''
 				pass
 		# Fallback determinístico
+		# Si es obligatorio usar LLM y no está disponible, devolvemos vacío
+		if self._require_llm and not self.is_enabled():
+			return ''
 		return self._semantic_fallback(
 			cargo, descripcion, eurace_skills, skills, carrera, asignaturas
 		)
@@ -297,8 +314,13 @@ class AIPersonalizer:
 					final = self._enforce_diversity(final, items, carrera)
 					return final[:len(items)]
 			except Exception:
+				# Si es obligatorio usar LLM, devolver lista vacía para que el caller lo detecte
+				if self._require_llm:
+					return ["" for _ in items]
 				pass
 		# Fallback determinístico
+		if self._require_llm and not self.is_enabled():
+			return ["" for _ in items]
 		explicaciones: List[str] = []
 		for it in items:
 			explicaciones.append(
@@ -333,8 +355,12 @@ class AIPersonalizer:
 					cleaned = [self._clean_text_out(p) for p in parsed]
 					return self._enforce_diversity(cleaned, items, carrera)[:len(items)]
 			except Exception:
+				if self._require_llm:
+					return ["" for _ in items]
 				pass
 		explicaciones: List[str] = []
+		if self._require_llm and not self.is_enabled():
+			return ["" for _ in items]
 		for it in items:
 			sugeridas = it.get('suggest_soft', '').strip()
 			base = self._simple_explanation(
