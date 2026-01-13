@@ -388,10 +388,15 @@
           const select = document.getElementById('career');
           select.innerHTML = '<option value="">Selecciona una carrera</option>';
           if (data.success && data.data && data.data.careers) {
-            const careers = data.data.careers.filter(c => c !== 'Ingenieria En Ciencias De Datos');
-            careers.forEach(c => {
+            const sorted = data.data.careers
+              .filter(c => c !== 'Ingenieria En Ciencias De Datos')
+              .map(c => ({ raw: c, label: formatCareerLabel(c) }))
+              .sort((a, b) => a.label.localeCompare(b.label, 'es', { sensitivity: 'base' }));
+            sorted.forEach(({ raw, label }) => {
               const opt = document.createElement('option');
-              opt.value = c; opt.textContent = formatCareerLabel(c); select.appendChild(opt);
+              opt.value = raw;
+              opt.textContent = label;
+              select.appendChild(opt);
             });
             badge.textContent = `Conectando perfiles con oportunidades`;
           } else {
